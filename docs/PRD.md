@@ -13,7 +13,7 @@ People in substance abuse recovery want apparel that reflects their journey, ide
 
 The founder is in recovery and has personally hit this wall — searching for shirts that capture how she and her peers talk about the experience and not finding them. Peers have repeatedly told her "that should be on a shirt" in response to phrases she uses naturally, which is the organic signal that prompted this project.
 
-The shirt is more than apparel: it's wearable hope. A 3.5-year-clean person wearing a milestone shirt at a meeting tells a newcomer, without saying a word, that long-term sobriety is possible.
+The shirt is more than apparel: it's wearable hope. A 3.5-year-clean person wearing a milestone shirt at a meeting tells a newcomer, without saying a word, that long-term cleantime is possible.
 
 ---
 
@@ -38,7 +38,7 @@ The shirt is more than apparel: it's wearable hope. A 3.5-year-clean person wear
 
 ## 4. Core user stories
 
-1. **[Must]** As a person in recovery, I want to find a shirt that reflects my milestone (e.g., 3.5 years clean) so that I can wear my pride publicly and show newcomers that long-term sobriety is possible.
+1. **[Must]** As a person in recovery, I want to find a shirt that reflects my milestone (e.g., 3.5 years clean) so that I can wear my pride publicly and show newcomers that long-term cleantime is possible.
 2. **[Must]** As a customer, I want to select my program (AA, NA, anger management), choose a shirt color from provided options, and enter my clean time so that the shirt feels personally mine without having to design anything from scratch.
 3. **[Must]** As a customer, I want to pay with CashApp, PayPal, Venmo, or a credit/debit card from my phone so that checkout feels as easy as any other mobile purchase.
 4. **[Should]** As a customer, I want to see a preview of my customized shirt before I buy so that I'm confident the clean time and color look right.
