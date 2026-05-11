@@ -1,105 +1,112 @@
 # Product Requirements Document (PRD)
 
-_Fill this out by having a conversation with Claude. Don't try to write it alone on a blank page — that's what the AI is for. Use the `/skills/pm-interview` skill to drive the conversation._
-
-> **Status:** Draft / In Review / Locked
-> **Last updated:** YYYY-MM-DD
-> **Author:** Your name
-> **Stakeholder:** Yourself / Name of the business or person you're building for
+> **Status:** Draft
+> **Last updated:** 2026-05-08
+> **Author:** Sunshine
+> **Stakeholder:** Sunshine (founder, in recovery, drawing on personal and peer experience)
 
 ---
 
 ## 1. The problem
 
-_In one paragraph, what is the problem? Who has it? What do they do today without your tool? Why is the status quo bad enough that someone would switch?_
+People in substance abuse recovery want apparel that reflects their journey, identity, and pride — but the existing market doesn't speak their language. Recovery-themed clothing tends to either lean on generic motivational slogans or use deep insider 12-step jargon that only resonates with old-timers. There's a gap in the middle: witty, relatable, milestone-aware phrases that feel like something an actual person in recovery would say.
 
-**Bad example:** "People need a way to track tasks."
-**Good example:** "Maria, who owns Maria's Tacos, posts weekly specials on Instagram, Facebook, and a chalkboard out front. She updates each one manually on Sunday nights and forgets one about half the time, so customers show up expecting Tuesday's special on Wednesday. She'd pay $10/month to update once and have all three update automatically."
+The founder is in recovery and has personally hit this wall — searching for shirts that capture how she and her peers talk about the experience and not finding them. Peers have repeatedly told her "that should be on a shirt" in response to phrases she uses naturally, which is the organic signal that prompted this project.
+
+The shirt is more than apparel: it's wearable hope. A 3.5-year-clean person wearing a milestone shirt at a meeting tells a newcomer, without saying a word, that long-term sobriety is possible.
 
 ---
 
 ## 2. The user
 
-Who specifically will use this? Be concrete. If you can't name a real person (or a realistic archetype), go talk to people until you can.
+- **Primary user:** Adults in active recovery (AA, NA, anger management, or other programs), age 25–65, who have hit a meaningful milestone and want to mark or share it.
+- **Their current workflow:** They search Amazon, Etsy, or Redbubble for recovery shirts, scroll through generic options, and either settle for something that's "close enough" or give up.
+- **Their technical comfort:** Comfortable enough to buy on Instagram or TikTok. Not necessarily savvy beyond that — checkout needs to be frictionless.
+- **What device will they use it on?** Phone, almost exclusively. Discovery happens on social media; purchase happens in the same session.
 
-- **Primary user:**
-- **Their current workflow:**
-- **Their technical comfort:** _(Are they comfortable with a web app? A chat interface? Do they live in their email?)_
-- **What device will they use it on?** _(Phone, desktop, both?)_
+**The buying moment:** Either (a) they relate to a phrase the moment they see it on social media, or (b) they're approaching/celebrating a recovery milestone (30/60/90 days, 6 months, yearly anniversaries) and want to mark it.
 
 ---
 
 ## 3. What success looks like
 
-How will you know this worked? Pick metrics you can actually measure.
-
-- **Must-have outcome:** _e.g. "Maria can update all three channels from one form in under 60 seconds."_
-- **Nice-to-have outcome:** _e.g. "Maria sees how many people clicked through from each channel."_
-- **Not a goal:** _e.g. "This is not a full CRM. We don't care about customer data."_
+- **Must-have outcome:** **10 sales in the first 30 days after launch.** This proves the audience exists, the phrases land, and the funnel from social → site → checkout works end-to-end.
+- **Nice-to-have outcome:** Customers post photos of themselves wearing the shirts on social media (organic word-of-mouth).
+- **Not a goal:** Building a community platform, blog, or content destination. This is a store, not a hub.
 
 ---
 
 ## 4. Core user stories
 
-List the things a user does with this product, in order of importance. Start with the single most important one. A good user story is "_As a [user], I want to [do thing] so that [outcome]._"
-
-1. **[Must]** As a _______, I want to _______ so that _______.
-2. **[Must]** ...
-3. **[Should]** ...
-4. **[Could]** ...
-5. **[Won't — this release]** ...
-
-_Use MoSCoW (Must / Should / Could / Won't) to force yourself to prioritize. If everything is a Must, nothing is._
+1. **[Must]** As a person in recovery, I want to find a shirt that reflects my milestone (e.g., 3.5 years clean) so that I can wear my pride publicly and show newcomers that long-term sobriety is possible.
+2. **[Must]** As a customer, I want to select my program (AA, NA, anger management), choose a shirt color from provided options, and enter my clean time so that the shirt feels personally mine without having to design anything from scratch.
+3. **[Must]** As a customer, I want to pay with CashApp, PayPal, Venmo, or a credit/debit card from my phone so that checkout feels as easy as any other mobile purchase.
+4. **[Should]** As a customer, I want to see a preview of my customized shirt before I buy so that I'm confident the clean time and color look right.
+5. **[Should]** As a customer, I want to receive an order confirmation and tracking info by email so that I know my order is being fulfilled.
 
 ---
 
-## 5. Out of scope
+## 5. Out of scope (v1)
 
-_What are you explicitly NOT building? This is the most important section. Everything not listed as in-scope above is at risk of scope creep — name the things you've been tempted by and are choosing not to build._
+Explicitly **not** building in v1:
 
-- ...
-- ...
+- User accounts (guest checkout only)
+- Blog or content marketing on the site
+- Community forum or discussion features
+- "Find your shirt" quiz or recommendation engine
+- Subscription boxes or recurring shipments
+- Bulk / wholesale orders for recovery centers
+- Designs based on traditional 12-step slogans that require insider program knowledge to understand
+- Customer-uploaded designs or full custom text beyond the clean-time field
 
 ---
 
 ## 6. Technical shape
 
-_This is where Claude can help most. Describe the shape, not the implementation. You'll refine this in code._
-
-- **Type of app:** _(Static site? Full-stack web app? API only?)_
-- **Does it need to store data?** _(If yes, what kind — structured records, files, both?)_
-- **Does it need authentication?** _(If yes, who can log in — you, your users, both?)_
-- **Does it need to call external services?** _(e.g. Instagram API, email sending, AI model)_
-- **Who pays for hosting?** _(This matters — Cloudflare's free tier is generous but not infinite.)_
+- **Type of app:** Full-stack web app (mobile-first storefront)
+- **Does it need to store data?** Yes — product catalog (designs, color options, available programs), order records, customization choices per order. No customer accounts.
+- **Does it need authentication?** Admin only (founder, to manage catalog). No customer auth.
+- **Does it need to call external services?** Yes — payment processors (Stripe, PayPal) and a dropship supplier API (TBD).
+- **Who pays for hosting?** Founder. Cloudflare free tier should comfortably cover early traffic.
 
 ### Proposed Cloudflare stack
 
-_Fill this in after discussing with Claude. Ask Claude to justify each choice._
-
 | Need | CF Product | Why |
 |---|---|---|
-| Hosting the web UI | | |
-| Backend logic | | |
-| Structured data | | |
-| File storage | | |
-| AI features | | |
+| Hosting the web UI | **Pages** | Serves the storefront globally; generous free tier |
+| Backend logic (checkout, order submission) | **Workers** | Serverless functions for payment + dropship API calls |
+| Structured data (catalog, orders) | **D1** | SQL database for products, color/program options, order records |
+| Shirt design images | **Cloudflare Images** | Stores and serves design previews; handles transformations |
+| Form/bot protection | **Turnstile** | Protects checkout from bot abuse |
+| Email (order confirmations) | **Email Service / external** | Transactional email for receipts and tracking |
+
+**Payment integrations (external):**
+- **Stripe** — credit/debit, Apple Pay, Google Pay, CashApp Pay
+- **PayPal SDK** — PayPal and Venmo
 
 ---
 
 ## 7. Risks and unknowns
 
-What could go wrong or surprise you? Be honest.
-
-- **Biggest risk:**
+- **Biggest risk:** **Dropship supplier choice and API integration.** The founder has not yet selected a supplier. The supplier's capabilities determine whether per-order custom text (clean time numbers) is even possible, what margins look like, and how complex the integration is. *Mitigation: select supplier in week 1, before any storefront code is written.*
 - **Things I don't know how to do yet:**
+  - Integrating a dropship API end-to-end
+  - Wiring multiple payment processors (Stripe + PayPal) into one checkout
+  - Building a mobile-first product customization UI with live preview
 - **Things I'm assuming but haven't verified:**
+  - Dropship suppliers will require a deposit/down payment (likely false — most use pay-per-order)
+  - Custom text and images cost extra per item (varies by supplier)
+  - Customers will buy a $25–35 shirt from an unknown brand on social media
+  - All four payment methods (CashApp, PayPal, Venmo, card) can be embedded in one checkout flow
+- **Operational risk:** Single dropship supplier = single point of failure. *Mitigation: identify a backup supplier; display shipping-delay notices on-site during peak seasons.*
 
 ---
 
 ## 8. Milestones
 
-A realistic plan for the next 3 weeks of building.
+A 3-week build plan. **Week 2 end must have something deployed and visible.**
 
-- **Week 2 end:** _What's deployed and working?_
-- **Week 3 end:** _What's deployed and working?_
-- **Week 4 demo:** _What does the final walkthrough show?_
+- **Week 1 end (May 14):** Dropship supplier selected and account created. Payment processors selected. Cloudflare project scaffolded (Pages + Workers + D1 + Images bindings configured). 3–5 starter shirt designs created (offline).
+- **Week 2 end (May 21):** **Live deployed storefront** that lets visitors browse the catalog, customize a shirt (program, color, clean time), and see a preview. Checkout does not need to work yet. Link shared with at least 5 peers in recovery for feedback.
+- **Week 3 end (May 28):** Stripe + PayPal checkout wired up. Dropship API submits real orders. End-to-end test placed with founder's own address. Soft launch on social media.
+- **Week 4 demo:** Walkthrough of a real customer journey — social media → site → customization → payment → order confirmation → dropship fulfillment notification.
