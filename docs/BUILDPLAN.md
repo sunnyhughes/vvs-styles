@@ -2,9 +2,9 @@
 
 _This file is the phased build plan for the project. It's the bridge between `docs/PRD.md` (what to build) + `docs/DESIGN.md` (what it looks like) and the actual code. Fill it out with the `build-plan` skill after the PRD and design brief are stable. Re-run the skill whenever reality has diverged from the plan._
 
-> **Status:** Draft
+> **Status:** In progress
 > **Last updated:** 2026-05-13
-> **Current phase:** Phase 0 (not started)
+> **Current phase:** Phase 1 (not started) — Phase 0 shipped 2026-05-13, live at https://vvs-styles.sunshinehughes.workers.dev
 
 ---
 
@@ -60,16 +60,16 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 **Tests this phase adds:** One smoke test — Worker responds 200, HTML contains "vvs-styles".
 
 **Done-when:**
-- [ ] `npm test` passes.
-- [ ] `wrangler deploy` produces a public URL.
-- [ ] Visiting the URL shows the "vvs-styles" wordmark in Fraunces, deep-forest color, on a cream background.
-- [ ] URL is committed in `README.md`.
+- [x] `npm test` passes.
+- [x] `wrangler deploy` produces a public URL.
+- [x] Visiting the URL shows the "vvs-styles" wordmark in Fraunces, deep-forest color, on a cream background.
+- [x] URL is committed in `README.md`.
 
-**Session budget:** 1–2 sessions.
+**Session budget:** 1–2 sessions. _Actual: 1 session._
 
 **Risks / unknowns:**
-- Cloudflare's Worker-serves-React-app pattern has shifted recently (Pages Functions vs Workers Assets binding vs Vite plugin). Decide once and document.
-- D1 binding can be a placeholder this phase — no schema needed yet.
+- Cloudflare's Worker-serves-React-app pattern has shifted recently (Pages Functions vs Workers Assets binding vs Vite plugin). Decide once and document. _Resolved: chose Workers + Static Assets via `@cloudflare/vite-plugin`. One Worker serves both the React SPA and `/api/*`._
+- D1 binding can be a placeholder this phase — no schema needed yet. _Resolved: D1 binding stanza is commented out in `wrangler.toml`, ready to uncomment in Phase 1._
 
 ---
 
@@ -268,6 +268,8 @@ A short append-only log of when the plan changed and why. Helps future-you under
 | Date | Phase touched | Change | Reason |
 |---|---|---|---|
 | 2026-05-13 | All | Initial plan written | First time through `build-plan` skill after PRD + DESIGN brief locked. |
+| 2026-05-13 | Phase 0 | Chose Workers + Static Assets + `@cloudflare/vite-plugin` | Cloudflare's current recommendation (Pages-to-Workers migration guide is the giveaway). One Worker, one deploy, SPA + API in the same binding. |
+| 2026-05-13 | Phase 0 | Shipped | Live at https://vvs-styles.sunshinehughes.workers.dev. Smoke test green; wordmark renders as designed. |
 
 ---
 
