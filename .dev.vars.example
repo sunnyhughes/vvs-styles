@@ -1,0 +1,4 @@
+# Local-only environment variables for `wrangler dev`. Copy to .dev.vars and fill in.
+# Production values go via `wrangler secret put`. Do NOT commit .dev.vars.
+#
+# Phase 0: no secrets needed yet. Add Stripe/PayPal/dropship keys in later phases.

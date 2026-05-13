@@ -9,6 +9,7 @@ worker-configuration.d.ts
 # Cloudflare local secrets — use `wrangler secret put` for production
 .dev.vars
 .dev.vars.*
+!.dev.vars.example
 
 # Generic env files
 .env

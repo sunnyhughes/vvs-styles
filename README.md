@@ -1,90 +1,39 @@
-# AI Foundations — Starter Repo
+# vvs-styles
 
-This is the starter repository for **AI Foundations: Architecting the Next Generation of Apps**. Clone it, rename it, and make it yours.
+Recovery-apparel storefront. Shirts that reference 12-step programs and clean-time milestones — designed for people in recovery, by someone in recovery.
 
-[![Fork this template](https://img.shields.io/badge/Fork_this_template-24292e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Bumbolio/agentic-coding-starter/fork)
-[![View syllabus](https://img.shields.io/badge/View_syllabus-a8361a?style=for-the-badge)](https://bumbolio.github.io/agentic-coding-starter/)
+🔗 **Live site:** [https://vvs-styles.sunshinehughes.workers.dev](https://vvs-styles.sunshinehughes.workers.dev)
 
-## What's in here
+## Stack
 
-```
-.
-├── .claude/
-│   ├── settings.json                  # Hooks config (Stop hook = run tests after each turn)
-│   └── skills/
-│       ├── pm-interview/              # Have Claude interview you to produce a PRD
-│       ├── design-brief/              # Have Claude interview you to produce a design brief
-│       ├── build-plan/                # Slice the project into phases that fit one session each
-│       ├── rubber-duck-quiz/          # Quiz yourself on code before committing
-│       ├── explain-this-code/         # Have Claude teach you code at the right depth
-│       ├── architecture-diagram/      # Generate + critique Mermaid diagrams
-│       └── cloudflare-product-picker/ # Pick the right CF product for a need
-├── CLAUDE.md                          # Project context Claude reads on every session
-├── README.md                          # This file
-└── docs/
-    ├── PRD.md                         # Template for your Product Requirements Document
-    ├── DESIGN.md                      # Template for your UI/UX design brief
-    ├── BUILDPLAN.md                   # Template for your phased, context-window-sized build plan
-    └── index.html                     # The course syllabus (served via GitHub Pages)
+- **Cloudflare Workers** (single Worker serves both the React SPA and the JSON API)
+- **React 19 + Vite** for the client, built via `@cloudflare/vite-plugin`
+- **Hono** for `/api/*` routes
+- **D1** for catalog + orders (binding wired in Phase 1)
+- **Tailwind CSS** + **Headless UI** + **Heroicons** for UI
+- **Vitest** with `@cloudflare/vitest-pool-workers` (tests run inside workerd, the real runtime)
+
+## Development
+
+```sh
+npm install
+npm run dev          # vite dev server, Worker code runs in workerd via the plugin
+npm test             # vitest run, against the real runtime
+npm run typecheck    # tsc --noEmit
+npm run build        # vite build → dist/
+npm run deploy       # build + wrangler deploy
 ```
 
-## Getting started
+Local secrets go in `.dev.vars` (copy from `.dev.vars.example`, never commit). Production secrets go via `wrangler secret put`.
 
-1. **Fork this repo** (use the badge above) and clone your fork. Rename the directory to match your project.
-2. **Install Claude Code** if you haven't. See [the docs](https://docs.claude.com/en/docs/claude-code/overview).
-3. **Install Wrangler:** `npm install -g wrangler`, then `wrangler login`.
-4. **Open Claude Code in the project directory:** `claude`.
-5. **Run the PM interview** to produce your PRD. It writes directly into `docs/PRD.md`:
-   ```
-   > Use the pm-interview skill to help me write a PRD for [your idea]
-   ```
-6. **Run the design-brief interview** once the PRD is stable. Output goes to `docs/DESIGN.md`:
-   ```
-   > Use the design-brief skill to help me fill out docs/DESIGN.md
-   ```
-   Defaults are React + Headless UI + Tailwind. The brief captures any deviation.
-7. **Bootstrap your app** with `npm create cloudflare@latest` once the PRD and design brief are clear enough.
-8. **Run the build-plan interview** after bootstrapping, before writing real features. Output goes to `docs/BUILDPLAN.md`:
-   ```
-   > Use the build-plan skill to help me fill out docs/BUILDPLAN.md
-   ```
-   Output is 3–6 phases sized to fit one Claude Code session each. Re-run it when the plan drifts from reality.
+## Project documents
 
-## The skills
+- [`docs/PRD.md`](docs/PRD.md) — product requirements
+- [`docs/DESIGN.md`](docs/DESIGN.md) — UI/UX design brief
+- [`docs/BUILDPLAN.md`](docs/BUILDPLAN.md) — phased build plan; the current phase is named at the top
+- [`CLAUDE.md`](CLAUDE.md) — how to work on this codebase with Claude Code
 
-Use them like this:
+## Course videos
 
-| When you're... | Use the skill... |
-|---|---|
-| Starting a new project or feature | `pm-interview` |
-| About to build UI for the first time | `design-brief` |
-| About to start coding a project | `build-plan` |
-| About to commit a chunk of AI-written code | `rubber-duck-quiz` |
-| Staring at code you don't fully grasp | `explain-this-code` |
-| Planning architecture or reviewing your own | `architecture-diagram` |
-| Unsure which Cloudflare product to use | `cloudflare-product-picker` |
-
-You don't have to name the skill — Claude will pick it up from context. But saying "use the rubber-duck-quiz skill" forces it.
-
-## Hooks
-
-`.claude/settings.json` ships with a **Stop hook** that runs `npm test` whenever Claude finishes a turn — Claude sees failures and keeps working. This enforces TDD without per-edit noise.
-
-If you want stricter behavior, swap the Stop hook for a `PostToolUse` hook (runs after every edit). Edit `.claude/settings.json` and ask Claude — the `update-config` skill knows the format.
-
-## Course rules
-
-- **No `--dangerously-skip-permissions` until week 3.** Read every diff.
-- **Run `rubber-duck-quiz` before every meaningful commit.** Claude can draft the commit message and run `git commit` for you — that's encouraged. The rule is that you must understand the change well enough to defend it before it lands.
-- **Architecture diagrams get regenerated every week.** If it no longer matches the code, something drifted.
-- **Two videos required, both linked in this README:**
-  - A **PRD explainer video** (≤5 min) recorded after week 1.
-  - A **demo video** (≤5 min) recorded by week 4 — the deployed app plus 2–3 file-level decisions.
-
-## Your project links
-
-_Replace these once you deploy and record:_
-
-🔗 **Live site:** [https://your-project.pages.dev](https://your-project.pages.dev)
-🎥 **PRD video:** [your-prd-video-link]
-🎥 **Demo video:** [your-demo-video-link]
+🎥 **PRD video:** _(link after recording)_
+🎥 **Demo video:** _(link after recording)_
