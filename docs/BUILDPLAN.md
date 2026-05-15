@@ -4,7 +4,7 @@ _This file is the phased build plan for the project. It's the bridge between `do
 
 > **Status:** In progress
 > **Last updated:** 2026-05-15
-> **Current phase:** Phase 2 (code-complete, not yet deployed) — Phase 1 shipped 2026-05-15, live at https://vvs-styles.sunshinehughes.workers.dev
+> **Current phase:** Phase 3 (not started) — Phase 2 shipped 2026-05-15, live at https://vvs-styles.sunshinehughes.workers.dev
 
 ---
 
@@ -143,7 +143,7 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 - [x] `/cart` shows the line item; quantity can be adjusted; total updates.
 - [x] Cart state survives a full page reload. _(cart lib test re-imports a fresh store)_
 - [x] All tests pass. _(31/31 — adds shirt-detail API, cart lib, ProgramSelector, ColorPicker, CleanTimeInput, CartDrawer)_
-- [ ] **Deploy pending:** apply `migrations/0002` + `seeds/shirt_options.sql` to remote D1, then `wrangler deploy`. Then manually phone-check the product page + cart.
+- [x] Deployed — migration 0002 (via `wrangler d1 migrations apply`) + `seeds/shirt_options.sql` applied to remote D1; `npm run deploy` live; phone-checked: product controls, live preview, cart drawer, and reload-persistence all confirmed.
 - [ ] **Public URL shared with 5 peers in recovery for feedback** (PRD §8 Week 2 milestone).
 
 **Session budget:** 2 sessions.
@@ -272,7 +272,7 @@ A short append-only log of when the plan changed and why. Helps future-you under
 | 2026-05-13 | Phase 0 | Chose Workers + Static Assets + `@cloudflare/vite-plugin` | Cloudflare's current recommendation (Pages-to-Workers migration guide is the giveaway). One Worker, one deploy, SPA + API in the same binding. |
 | 2026-05-13 | Phase 0 | Shipped | Live at https://vvs-styles.sunshinehughes.workers.dev. Smoke test green; wordmark renders as designed. |
 | 2026-05-15 | Phase 1 | Shipped | Browse flow live — D1 `shirts` table + `GET /api/shirts`, Landing/Shop/Nav. Vitest split into worker + client (jsdom) projects; 9/9 green. Shirt/hero imagery still placeholder; insider phrases still mocked. |
-| 2026-05-15 | Phase 2 | Code-complete | Customize + add-to-cart built — `colors`/`programs` + join tables, `GET /api/shirts/:slug`, Product page with live preview, localStorage cart + drawer. 31/31 tests green. `tests/lib/*.test.ts` routed to the jsdom project (needs `localStorage`) via vitest/tsconfig excludes. Preview is the simplest version per DESIGN §7 (colored panel + overlaid text); insider phrases still mocked. Not yet deployed — remote D1 needs migration 0002 + `seeds/shirt_options.sql`. |
+| 2026-05-15 | Phase 2 | Shipped | Customize + add-to-cart live — `colors`/`programs` + join tables, `GET /api/shirts/:slug`, Product page with live preview, localStorage cart + drawer. 31/31 tests green. `tests/lib/*.test.ts` routed to the jsdom project (needs `localStorage`) via vitest/tsconfig excludes. Preview is the simplest version per DESIGN §7 (colored panel + overlaid text); insider phrases still mocked. Remote D1 migration 0002 applied via `wrangler d1 migrations apply` (not raw `execute`) so `d1_migrations` stays accurate. |
 
 ---
 
