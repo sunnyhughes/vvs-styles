@@ -1,4 +1,4 @@
-import type { Shirt } from "../../shared/types";
+import type { Shirt, ShirtDetail } from "../../shared/types";
 
 /** Typed `fetch` wrapper for the Worker's `/api/*` endpoints. */
 async function fetchJson<T>(path: string): Promise<T> {
@@ -12,6 +12,11 @@ async function fetchJson<T>(path: string): Promise<T> {
 /** Fetches the full shirt catalog from `GET /api/shirts`. */
 export function getShirts(): Promise<Shirt[]> {
   return fetchJson<Shirt[]>("/api/shirts");
+}
+
+/** Fetches one shirt plus its options from `GET /api/shirts/:slug`. */
+export function getShirt(slug: string): Promise<ShirtDetail> {
+  return fetchJson<ShirtDetail>(`/api/shirts/${encodeURIComponent(slug)}`);
 }
 
 /** Formats a price in cents as US dollars, e.g. 2800 → "$28.00". */

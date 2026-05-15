@@ -1,8 +1,11 @@
 import type { ReactNode } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { CartDrawer } from "./components/CartDrawer";
 import { Footer } from "./components/Footer";
 import { Nav } from "./components/Nav";
+import { Cart } from "./pages/Cart";
 import { Landing } from "./pages/Landing";
+import { Product } from "./pages/Product";
 import { Shop } from "./pages/Shop";
 
 /** Shared chrome wrapped around every page. */
@@ -12,11 +15,12 @@ function Layout({ children }: { children: ReactNode }) {
       <Nav />
       <main className="flex-1">{children}</main>
       <Footer />
+      <CartDrawer />
     </div>
   );
 }
 
-/** Placeholder for routes built in later phases (cart, product, about, FAQ). */
+/** Placeholder for routes built in later phases (checkout, about, FAQ). */
 function ComingSoon() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-20 text-center">
@@ -35,6 +39,8 @@ export function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:slug" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<ComingSoon />} />
         </Routes>
       </Layout>

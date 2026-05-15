@@ -25,6 +25,9 @@ export default defineConfig(async () => {
           test: {
             name: "worker",
             include: ["tests/**/*.test.ts"],
+            // `tests/lib/*` exercises browser APIs (localStorage) — those run
+            // in the jsdom "client" project below, not the Workers runtime.
+            exclude: ["tests/lib/**"],
           },
         },
         {
@@ -32,7 +35,7 @@ export default defineConfig(async () => {
           test: {
             name: "client",
             environment: "jsdom",
-            include: ["tests/**/*.test.tsx"],
+            include: ["tests/**/*.test.tsx", "tests/lib/**/*.test.ts"],
             setupFiles: ["./tests/setup.client.ts"],
           },
         },

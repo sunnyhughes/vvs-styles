@@ -19,5 +19,6 @@
     "src/shared/**/*",
     "tests/**/*.test.ts",
     "tests/env.d.ts"
-  ]
+  ],
+  "exclude": ["tests/lib/**"]
 }
