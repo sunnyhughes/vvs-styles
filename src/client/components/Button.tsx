@@ -17,6 +17,14 @@ const variants: Record<Variant, string> = {
     "bg-stone-50 text-emerald-800 border border-emerald-800 hover:bg-stone-100",
 };
 
+/**
+ * Button styling, exported so a router `<Link>` can be styled as a CTA without
+ * nesting a `<button>` inside an `<a>`.
+ */
+export function buttonClassName(variant: Variant = "primary", className = "") {
+  return `${base} ${variants[variant]} ${className}`.trim();
+}
+
 export function Button({
   variant = "primary",
   className,
@@ -24,10 +32,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   return (
-    <button
-      className={`${base} ${variants[variant]} ${className ?? ""}`.trim()}
-      {...rest}
-    >
+    <button className={buttonClassName(variant, className)} {...rest}>
       {children}
     </button>
   );

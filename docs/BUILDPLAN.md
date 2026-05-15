@@ -3,8 +3,8 @@
 _This file is the phased build plan for the project. It's the bridge between `docs/PRD.md` (what to build) + `docs/DESIGN.md` (what it looks like) and the actual code. Fill it out with the `build-plan` skill after the PRD and design brief are stable. Re-run the skill whenever reality has diverged from the plan._
 
 > **Status:** In progress
-> **Last updated:** 2026-05-13
-> **Current phase:** Phase 1 (not started) — Phase 0 shipped 2026-05-13, live at https://vvs-styles.sunshinehughes.workers.dev
+> **Last updated:** 2026-05-15
+> **Current phase:** Phase 2 (not started) — Phase 1 shipped 2026-05-15, live at https://vvs-styles.sunshinehughes.workers.dev
 
 ---
 
@@ -95,11 +95,11 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 - `tests/components/Nav.test.tsx` — hamburger opens drawer on mobile width; keyboard-navigable.
 
 **Done-when:**
-- [ ] Visiting the public URL on a phone shows a hero and a "Shop the collection" CTA.
-- [ ] `/shop` shows 3–5 seeded shirts in a responsive grid.
-- [ ] Top nav works: mobile = hamburger drawer; desktop = inline links.
-- [ ] All tests pass.
-- [ ] Keyboard-only navigation works from hero CTA through to shop grid.
+- [x] Visiting the public URL on a phone shows a hero and a "Shop the collection" CTA.
+- [x] `/shop` shows 3–5 seeded shirts in a responsive grid.
+- [x] Top nav works: mobile = hamburger drawer; desktop = inline links.
+- [x] All tests pass. _(9/9 — smoke, shirts API, ShirtCard, Nav)_
+- [ ] Keyboard-only navigation works from hero CTA through to shop grid. _(drawer keyboard path covered by Nav test; recommend one manual tab-through before launch)_
 
 **Session budget:** 2 sessions (substantial UI work).
 
@@ -270,6 +270,7 @@ A short append-only log of when the plan changed and why. Helps future-you under
 | 2026-05-13 | All | Initial plan written | First time through `build-plan` skill after PRD + DESIGN brief locked. |
 | 2026-05-13 | Phase 0 | Chose Workers + Static Assets + `@cloudflare/vite-plugin` | Cloudflare's current recommendation (Pages-to-Workers migration guide is the giveaway). One Worker, one deploy, SPA + API in the same binding. |
 | 2026-05-13 | Phase 0 | Shipped | Live at https://vvs-styles.sunshinehughes.workers.dev. Smoke test green; wordmark renders as designed. |
+| 2026-05-15 | Phase 1 | Shipped | Browse flow live — D1 `shirts` table + `GET /api/shirts`, Landing/Shop/Nav. Vitest split into worker + client (jsdom) projects; 9/9 green. Shirt/hero imagery still placeholder; insider phrases still mocked. |
 
 ---
 

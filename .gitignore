@@ -5,6 +5,7 @@ node_modules/
 dist/
 .wrangler/
 worker-configuration.d.ts
+*.tsbuildinfo
 
 # Cloudflare local secrets — use `wrangler secret put` for production
 .dev.vars

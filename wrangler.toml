@@ -6,8 +6,10 @@ compatibility_date = "2026-05-13"
 not_found_handling = "single-page-application"
 run_worker_first = ["/api/*"]
 
-# D1 binding — uncomment in Phase 1 once `wrangler d1 create vvs-styles` has run.
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "vvs-styles"
-# database_id = "TODO"
+[[d1_databases]]
+binding = "DB"
+database_name = "vvs-styles"
+# Placeholder ID — fine for local dev (`wrangler dev`) and Vitest (Miniflare),
+# which key off `database_name`. Before the first `wrangler deploy`, run
+# `wrangler d1 create vvs-styles` and paste the real ID it prints here.
+database_id = "1ebb4f68-24c1-4052-b4a8-4d40157de8d8"

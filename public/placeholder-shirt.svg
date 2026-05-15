@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Shirt photo placeholder">
+  <rect width="400" height="400" fill="#E7E5E4" />
+  <path
+    d="M150 88 L108 120 L78 96 L40 142 L80 182 L108 168 L108 324 L292 324 L292 168 L320 182 L360 142 L322 96 L292 120 L250 88 C236 112 164 112 150 88 Z"
+    fill="#FAFAF9"
+    stroke="#166534"
+    stroke-width="6"
+    stroke-linejoin="round"
+  />
+  <text x="200" y="364" font-family="Inter, ui-sans-serif, sans-serif" font-size="20" fill="#78716C" text-anchor="middle">
+    photo placeholder
+  </text>
+</svg>
