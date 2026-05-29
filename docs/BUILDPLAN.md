@@ -3,8 +3,8 @@
 _This file is the phased build plan for the project. It's the bridge between `docs/PRD.md` (what to build) + `docs/DESIGN.md` (what it looks like) and the actual code. Fill it out with the `build-plan` skill after the PRD and design brief are stable. Re-run the skill whenever reality has diverged from the plan._
 
 > **Status:** In progress
-> **Last updated:** 2026-05-15
-> **Current phase:** Phase 3 (not started) — Phase 2 shipped 2026-05-15, live at https://vvs-styles.sunshinehughes.workers.dev
+> **Last updated:** 2026-05-29
+> **Current phase:** Phase 2.5 (v1 polish from peer feedback) — not started. Phase 2 shipped + peer-reviewed 2026-05-29, live at https://vvs-styles.sunshinehughes.workers.dev
 
 ---
 
@@ -144,7 +144,7 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 - [x] Cart state survives a full page reload. _(cart lib test re-imports a fresh store)_
 - [x] All tests pass. _(31/31 — adds shirt-detail API, cart lib, ProgramSelector, ColorPicker, CleanTimeInput, CartDrawer)_
 - [x] Deployed — migration 0002 (via `wrangler d1 migrations apply`) + `seeds/shirt_options.sql` applied to remote D1; `npm run deploy` live; phone-checked: product controls, live preview, cart drawer, and reload-persistence all confirmed.
-- [ ] **Public URL shared with 5 peers in recovery for feedback** (PRD §8 Week 2 milestone).
+- [x] **Public URL shared with peers in recovery for feedback** (PRD §8 Week 2 milestone). _Done 2026-05-29. Verdict: concept + layout liked; wants real shirt images, basic color set, the program selector reconsidered, a brand mark. Folded into Phase 2.5 below._
 
 **Session budget:** 2 sessions.
 
@@ -152,6 +152,43 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 - Customization preview is the #1 design risk (DESIGN §7). If layered images look janky, escalate to SVG overlay before reaching for canvas. Do not let "perfect preview" block the milestone.
 - Mobile keyboard behavior on `CleanTimeInput` — test on a real phone, not just DevTools.
 - Insider-phrase catalog still pending; seed with mocks.
+
+---
+
+### Phase 2.5 — Incorporate peer feedback (v1 polish)  ← current
+
+**Goal:** Fold the 2026-05-29 peer review into the shipped storefront so v1 reads as a real product before payment work begins: drop the program selector, switch to a basic color set, seed real insider phrases, and replace the placeholder preview with a real t-shirt image. End state = a storefront ready to wire payments onto.
+
+**Context to load:** `docs/PRD.md` §4 story 2 + §5 (program now out of scope), `docs/DESIGN.md` §2 (product detail), §3 (`RadioGroup`/preview), §7 (preview + phrases risks). Files from Phase 2: `src/client/pages/Product.tsx`, `src/client/components/ProgramSelector.tsx`, `ColorPicker.tsx`, `ShirtPreview.tsx`, `migrations/*`, `seeds/*`, `tests/components/ProgramSelector.test.tsx`.
+
+**Files this phase creates/modifies:**
+- `migrations/0003_drop_program_selection.sql` — remove `programs`/`shirt_programs` from the customer flow (or repurpose as an internal `category` column on `shirts` for the future filter; keep data, drop the per-product selection). Add `accent_image_url` (nullable) for the optional accompanying graphic.
+- `seeds/shirts.sql` / `seeds/shirt_options.sql` — replace mock phrases with the real <8 v1 designs; replace color options with the six basics (white, black, gray, red, pink, blue); add real product image URLs.
+- `src/client/pages/Product.tsx` — remove `<ProgramSelector>` from the flow; layout now color + size + clean-time + preview.
+- `src/client/components/ProgramSelector.tsx` — delete (and its test) once unreferenced.
+- `src/client/components/ShirtPreview.tsx` — swap the colored panel for a real product image base; render optional `accent_image_url`; keep clean-time as an overlaid `<span>`.
+- `src/worker/routes/shirts.ts` — stop returning per-product programs; return `category` if added.
+- Produce a simple brand mark (wordmark is acceptable) for the neck-tag label — applied at the provider in Phase 4.
+
+**Tests this phase adds/changes:**
+- Delete `tests/components/ProgramSelector.test.tsx`.
+- Update `tests/api/shirts.test.ts` — shirt detail no longer includes programs.
+- Update/extend `ShirtPreview` coverage if a test exists — renders a real image base + overlay.
+
+**Done-when:**
+- [ ] Product page has no program selector; flow is color → size → clean-time → preview → add-to-cart.
+- [ ] Color options are the six basics across all shirts.
+- [ ] Catalog shows the real v1 phrases (<8 designs), not mocks.
+- [ ] Preview shows a real t-shirt image (plus accent graphic where set), not the colored panel.
+- [ ] Migration + seed re-applied to remote D1; `npm run deploy` live; phone-checked.
+- [ ] All tests pass (program tests removed, shirt API test updated).
+
+**Session budget:** 1–2 sessions.
+
+**Risks / unknowns:**
+- Real product images depend on the print provider being chosen (Phase 4 decision) — if mockups aren't ready, use a high-quality stand-in tee photo and flag, but do not let imagery block the program-selector/color/phrase changes.
+- Dropping `programs` touches a shipped migration — prefer an additive migration (0003) over editing 0002, and apply via `wrangler d1 migrations apply --remote` so `d1_migrations` stays accurate.
+- Phrase categories (Recovery/Healing/Motivation) filter UI is **not** built here — it's deferred until the catalog passes ~10 designs. Just store the category.
 
 ---
 
@@ -189,7 +226,7 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 **Session budget:** 2+ sessions (payment integrations are fiddly).
 
 **Risks / unknowns:**
-- Stripe and PayPal both require account creation up front — block on this if accounts don't exist.
+- Stripe and PayPal both require account creation up front — block on this if accounts don't exist. _Update 2026-05-29: Stripe account created — finish its setup using the live Worker URL (https://vvs-styles.sunshinehughes.workers.dev) as the business URL. Founder has personal CashApp + PayPal; note that Cash App Pay runs **through Stripe** (not the personal $cashtag), and PayPal + Venmo via the PayPal SDK want a free **PayPal Business** account — upgrade before wiring Venmo._
 - CashApp Pay availability via Stripe varies by region — verify before promising it in UI.
 - Each payment provider's mobile sheet has different return behavior — test on a real phone, not just desktop.
 - PRD §7 calls out a possibly-false assumption that all four methods can be embedded in one checkout — verify Venmo via PayPal SDK works in our integration shape.
@@ -224,7 +261,7 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 **Session budget:** 2 sessions.
 
 **Risks / unknowns:**
-- **Phase 4 is blocked until the dropship supplier is selected** (PRD §7 #1 risk; PRD §8 Week 1 milestone). If supplier still isn't chosen, do not start this phase.
+- **Phase 4 is blocked until the dropship supplier is selected** (PRD §7 #1 risk; PRD §8 Week 1 milestone). If supplier still isn't chosen, do not start this phase. _Update 2026-05-29: Printify and Printful accounts both created — pick one for v1 before starting (do a quality-vs-cost comparison then). Also set up the inside-neck-tag brand label via the chosen provider's branding feature, per peer feedback._
 - Email deliverability — sender domain authentication (SPF/DKIM/DMARC) must be set up before email service goes live.
 
 ---
@@ -273,6 +310,8 @@ A short append-only log of when the plan changed and why. Helps future-you under
 | 2026-05-13 | Phase 0 | Shipped | Live at https://vvs-styles.sunshinehughes.workers.dev. Smoke test green; wordmark renders as designed. |
 | 2026-05-15 | Phase 1 | Shipped | Browse flow live — D1 `shirts` table + `GET /api/shirts`, Landing/Shop/Nav. Vitest split into worker + client (jsdom) projects; 9/9 green. Shirt/hero imagery still placeholder; insider phrases still mocked. |
 | 2026-05-15 | Phase 2 | Shipped | Customize + add-to-cart live — `colors`/`programs` + join tables, `GET /api/shirts/:slug`, Product page with live preview, localStorage cart + drawer. 31/31 tests green. `tests/lib/*.test.ts` routed to the jsdom project (needs `localStorage`) via vitest/tsconfig excludes. Preview is the simplest version per DESIGN §7 (colored panel + overlaid text); insider phrases still mocked. Remote D1 migration 0002 applied via `wrangler d1 migrations apply` (not raw `execute`) so `d1_migrations` stays accurate. |
+| 2026-05-29 | Phase 2 / new Phase 2.5 | Peer review closed Week 2 milestone; added Phase 2.5 | Shared the live URL with peers in recovery. Feedback: concept + layout liked; wants a real t-shirt image, basic color set (white/black/gray/red/pink/blue), the program selector dropped (only matters when a phrase is program-specific — returns as a `/shop` category filter at >10 designs), and a brand mark for the neck tag. Inserted **Phase 2.5** to fold this in before payment. PRD §4/§5/§7/§8 + DESIGN §2/§3/§7/§8 updated to match. |
+| 2026-05-29 | Phases 3 & 4 | De-risked | Supplier risk resolved — Printify + Printful accounts created (pick one for Phase 4). Stripe account created (complete setup with the live Worker URL). Noted Cash App Pay runs through Stripe and PayPal/Venmo wants a PayPal Business account. |
 
 ---
 

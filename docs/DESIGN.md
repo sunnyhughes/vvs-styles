@@ -27,8 +27,8 @@ The common thread of all three: **never make a person in recovery feel like the 
 
 **Primary screens (top-level routes):**
 - `/` — **Landing.** Hero, brand promise, featured shirts, entry point to shop.
-- `/shop` — **Product catalog.** All available shirts; mobile-friendly grid; filter by program (AA, NA, anger management) once there's enough inventory to need it.
-- `/product/:slug` — **Product detail + customization.** Single shirt with the customization flow: program selector, shirt color picker, clean-time input, live-ish preview, add-to-cart.
+- `/shop` — **Product catalog.** All available shirts; mobile-friendly grid; filter by **phrase category (Recovery, Healing, Motivation)** once the catalog passes ~10 designs. _(Was "filter by program"; changed 2026-05-29 per peer feedback — see §7.)_
+- `/product/:slug` — **Product detail + customization.** Single shirt with the customization flow: shirt color picker (v1 = six basics: white, black, gray, red, pink, blue), size, clean-time input, live-ish preview, add-to-cart. _(Program selector dropped in v1 — peer feedback: a program only matters when the phrase is program-specific.)_
 - `/cart` — **Cart review.** Line items, quantities, subtotal, "checkout" button. On mobile, a slide-over drawer triggered from the nav is the everyday access pattern; the `/cart` route is the dedicated review page.
 - `/checkout` — **Payment.** CashApp / PayPal / Venmo / card. Shipping address. Order summary.
 - `/order/confirmation` — **Thank-you.** Order number, what to expect, optional "share your shirt" prompt for the social loop.
@@ -66,14 +66,14 @@ Footer is shared across all routes and includes `About`, `FAQ`, social links, co
 
 **Headless UI primitives we'll actually use:**
 - `Dialog` — mobile nav drawer; cart drawer.
-- `RadioGroup` — program selector (AA / NA / anger management); color picker on product page.
+- `RadioGroup` — color picker on product page. _(Program selector dropped in v1; phrase-category filtering returns to `/shop` as a `Combobox`/filter once the catalog passes ~10 designs.)_
 - `Listbox` — size selector on product page.
 - `Disclosure` — FAQ accordion items.
 - `Combobox` — only if `/shop` grows enough to need search.
 
 **Custom components (built ourselves):**
 - Product image viewer with pinch-zoom on mobile. Start simple (just a tap-to-zoom modal using `Dialog`); reach for [yet-another-react-lightbox](https://yet-another-react-lightbox.com/) only if needed.
-- The customization preview that renders the chosen color + clean-time on a shirt mockup. Approach TBD — could be SVG overlay, layered images, or a small canvas render.
+- The customization preview that renders the chosen color + clean-time on a shirt mockup. **v1 direction (2026-05-29):** use a **real product image** from the print provider's mockup as the base (replacing the placeholder colored panel Phase 2 shipped), with clean-time overlaid as text; some designs also carry a **small accompanying graphic** that complements the phrase. Keep the overlaid-`<span>` approach for clean-time; only reach for SVG/canvas if it looks janky over a real photo.
 - Reusable `<Button>` wrapper to keep button styling consistent across the app from day one.
 
 **Why this stack:** Headless UI gives accessibility (focus management, ARIA, keyboard nav) for free; Tailwind makes the styling decisions explicit in markup. Together they let an AI-assisted developer move fast without shipping inaccessible junk.
@@ -141,9 +141,9 @@ The non-negotiables for this project. All five are committed for v1 — built in
 
 ## 7. Risks & unknowns
 
-- **Customization preview — #1 design risk.** "Show the customer their chosen color + clean time on a shirt mockup before they buy" can be done as an SVG overlay, layered images, or a canvas render. None is obvious-best. If the preview looks janky or slow, customers will abandon the customization flow. Plan to prototype the simplest version first (layered images with the clean-time as an overlaid `<span>`) and only level up if needed.
+- **Customization preview — #1 design risk.** "Show the customer their chosen color + clean time on a shirt mockup before they buy" can be done as an SVG overlay, layered images, or a canvas render. None is obvious-best. If the preview looks janky or slow, customers will abandon the customization flow. Plan to prototype the simplest version first (layered images with the clean-time as an overlaid `<span>`) and only level up if needed. _Update 2026-05-29: Phase 2 shipped the placeholder (a colored panel + overlaid text). Peers confirmed the layout works but want a **real t-shirt image** — the v1 polish pass swaps the colored panel for real product mockups from the chosen print provider._
 - **Hero photography is a hard dependency.** The legitimacy strategy in section 2 only works if we have real, faceless lifestyle photos of people wearing shirts with strong insider phrases. Stock photos break the strategy. Need a plan (shoot ourselves? trade shirts to peers in exchange for photos?) before launch.
-- **"Strongest insider phrases" aren't catalogued yet.** The PRD names the "that should be on a shirt" signal but doesn't list which specific phrases. The hero shirt's phrase is critical — it's the legitimacy proof. Need to gather 10–20 candidate phrases and pick the strongest one for the hero before designing the hero in detail.
+- **"Strongest insider phrases" aren't catalogued yet.** The PRD names the "that should be on a shirt" signal but doesn't list which specific phrases. The hero shirt's phrase is critical — it's the legitimacy proof. Need to gather 10–20 candidate phrases and pick the strongest one for the hero before designing the hero in detail. _Update 2026-05-29: founder now has real phrases to seed the database, replacing the mocks. v1 launches with **fewer than 8 designs**, adding more based on launch performance._
 - **Mobile payment flow.** Integration is a separate engineering problem, but the visual flow through CashApp / Venmo / PayPal / card in one mobile session has to be tight or people bail. Design risk: each provider has its own redirect/sheet behavior, which can break the visual continuity of the checkout.
 
 ## 8. Out of scope (for v1)
@@ -152,5 +152,5 @@ Same spirit as the PRD's out-of-scope section but for design. The goal of v1 is 
 
 - **Dark mode.** Light theme only. Adds complexity to every color decision; not a known buyer expectation for an apparel store. Revisit if customer feedback asks for it.
 - **Custom animations / motion design.** Only the default Headless UI transitions (smooth open/close for drawers and dialogs). No Framer Motion, no scroll animations, no hover micro-interactions beyond Tailwind's defaults.
-- **A real logo or custom illustration system.** The v1 "logo" is the wordmark "vvs-styles" set in Fraunces in deep forest (`#166534`). A commissioned logo and any illustration system come after revenue exists to fund them.
+- **A commissioned logo or custom illustration system.** The v1 *site* "logo" is the wordmark "vvs-styles" set in Fraunces in deep forest (`#166534`). A commissioned logo and any illustration system come after revenue exists to fund them. _Update 2026-05-29: peers flagged that the physical product needs a brand mark (e.g. inside-neck-tag label). In scope for v1: a **simple brand mark** (the wordmark is fine) applied to the product via the print provider's branding/neck-label feature — set up during Phase 4. A fully designed/illustrated logo system stays deferred._
 - **Internationalization / non-English layouts.** English only. No translation framework, no RTL layouts, no currency switching. US-only checkout for v1.
