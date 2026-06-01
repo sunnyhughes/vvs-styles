@@ -34,7 +34,10 @@ export function Cart() {
 
       <ul className="mt-6 divide-y divide-stone-200 border-y border-stone-200">
         {items.map((item) => {
-          const cleanTime = formatCleanTime(item.cleanTimeYears);
+          const cleanTime = formatCleanTime(
+            item.cleantimeMode,
+            item.cleantimeValue,
+          );
           return (
             <li
               key={item.lineId}
@@ -45,7 +48,7 @@ export function Cart() {
                   {item.name}
                 </p>
                 <p className="mt-1 font-sans text-sm text-stone-500">
-                  {item.program} &middot; {item.color} &middot; {item.size}
+                  {item.color} &middot; {item.size}
                   {cleanTime ? ` · ${cleanTime}` : ""}
                 </p>
                 <p className="mt-1 font-sans text-base text-stone-700">

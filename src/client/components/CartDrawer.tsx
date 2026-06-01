@@ -54,7 +54,10 @@ export function CartDrawer() {
           ) : (
             <ul className="flex-1 divide-y divide-stone-200 overflow-y-auto">
               {items.map((item) => {
-                const cleanTime = formatCleanTime(item.cleanTimeYears);
+                const cleanTime = formatCleanTime(
+                  item.cleantimeMode,
+                  item.cleantimeValue,
+                );
                 return (
                   <li key={item.lineId} className="flex gap-3 p-4">
                     <div className="flex-1">
@@ -62,7 +65,7 @@ export function CartDrawer() {
                         {item.name}
                       </p>
                       <p className="font-sans text-sm text-stone-500">
-                        {item.program} &middot; {item.color} &middot; {item.size}
+                        {item.color} &middot; {item.size}
                         {cleanTime ? ` · ${cleanTime}` : ""}
                       </p>
                       <p className="font-sans text-sm text-stone-700">

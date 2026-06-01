@@ -1,6 +1,7 @@
 name = "vvs-styles"
 main = "src/worker/index.ts"
 compatibility_date = "2026-05-13"
+account_id = "68ac97ce8c0b4e8a007aa81433a1e264"
 
 [assets]
 not_found_handling = "single-page-application"

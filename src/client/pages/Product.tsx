@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import type { Color, Program, ShirtDetail } from "../../shared/types";
+import type { Color, ShirtDetail } from "../../shared/types";
 import { AddToCartButton } from "../components/AddToCartButton";
 import { CleanTimeInput } from "../components/CleanTimeInput";
 import { ColorPicker } from "../components/ColorPicker";
-import { ProgramSelector } from "../components/ProgramSelector";
 import { ShirtPreview } from "../components/ShirtPreview";
 import { SizeSelector, type Size } from "../components/SizeSelector";
 import { formatPriceUsd, getShirt } from "../lib/api";
@@ -20,9 +19,7 @@ export function Product() {
   const { slug } = useParams<{ slug: string }>();
   const [state, setState] = useState<LoadState>({ status: "loading" });
 
-  // Customization selections. Program starts unset so the buyer makes a
-  // deliberate choice; color/size default so the preview renders immediately.
-  const [program, setProgram] = useState<Program | null>(null);
+  // Color defaults to the first option so the preview renders immediately.
   const [color, setColor] = useState<Color | null>(null);
   const [size, setSize] = useState<Size>("M");
   const [cleanTime, setCleanTime] = useState("");
@@ -36,7 +33,7 @@ export function Product() {
         if (cancelled) return;
         setState({ status: "ready", shirt });
         setColor(shirt.colors[0] ?? null);
-        setProgram(null);
+        setCleanTime("");
       })
       .catch(() => {
         if (!cancelled) setState({ status: "error" });
@@ -66,32 +63,32 @@ export function Product() {
   }
 
   const { shirt } = state;
-  const cleanTimeYears = Number(cleanTime) > 0 ? Number(cleanTime) : 0;
+  const cleantimeValue = Number(cleanTime) > 0 ? Number(cleanTime) : 0;
 
-  // Item is only buildable once the required options (program + color) are set.
-  const item: NewCartItem | null =
-    program && color
-      ? {
-          slug: shirt.slug,
-          name: shirt.name,
-          unitPriceCents: shirt.base_price_cents,
-          imageUrl: shirt.default_image_url,
-          program: program.name,
-          color: color.name,
-          colorHex: color.hex,
-          size,
-          cleanTimeYears,
-        }
-      : null;
+  const item: NewCartItem | null = color
+    ? {
+        slug: shirt.slug,
+        name: shirt.name,
+        unitPriceCents: shirt.base_price_cents,
+        imageUrl: shirt.default_image_url,
+        color: color.name,
+        colorHex: color.hex,
+        size,
+        cleantimeMode: shirt.cleantime_mode,
+        cleantimeValue,
+      }
+    : null;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:grid lg:grid-cols-2 lg:gap-10">
       <div className="lg:sticky lg:top-24 lg:self-start">
         <ShirtPreview
           phrase={shirt.hero_phrase}
-          colorHex={color?.hex ?? "#F5F0E6"}
-          colorName={color?.name ?? "Cream"}
-          cleanTimeYears={cleanTimeYears}
+          colorHex={color?.hex ?? "#FFFFFF"}
+          colorName={color?.name ?? "White"}
+          cleantimeMode={shirt.cleantime_mode}
+          cleantimeValue={cleantimeValue}
+          accentImageUrl={shirt.accent_image_url}
         />
       </div>
 
@@ -102,27 +99,23 @@ export function Product() {
         </p>
 
         <div className="mt-6 flex flex-col gap-6">
-          <ProgramSelector
-            programs={shirt.programs}
-            value={program}
-            onChange={setProgram}
-          />
           <ColorPicker
             colors={shirt.colors}
             value={color}
             onChange={setColor}
           />
-          <CleanTimeInput value={cleanTime} onChange={setCleanTime} />
+          {shirt.cleantime_mode !== "none" && (
+            <CleanTimeInput
+              mode={shirt.cleantime_mode}
+              value={cleanTime}
+              onChange={setCleanTime}
+            />
+          )}
           <SizeSelector value={size} onChange={setSize} />
         </div>
 
         <div className="mt-8">
           <AddToCartButton item={item} disabled={!item} />
-          {!program && (
-            <p className="mt-2 font-sans text-sm text-stone-500">
-              Choose a program to add this shirt to your cart.
-            </p>
-          )}
         </div>
       </div>
     </div>

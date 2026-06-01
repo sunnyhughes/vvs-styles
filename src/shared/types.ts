@@ -17,18 +17,21 @@ export interface Color {
   hex: string;
 }
 
-/** A recovery program option (AA / NA / anger management). */
-export interface Program {
-  id: number;
-  slug: string;
-  name: string;
-}
+/**
+ * Per-shirt customization mode — drives the input + overlay on the product
+ * page. Most phrases stand alone ('none'); a few take years clean (e.g.
+ * "Still Here, Still Clean"); a few take the year clean (e.g. "Clean and
+ * Serene since 1953").
+ */
+export type CleantimeMode = "none" | "years" | "year_clean";
 
 /**
  * A single shirt plus its customization options, returned by
  * `GET /api/shirts/:slug` and used to render the product detail page.
  */
 export interface ShirtDetail extends Shirt {
+  category: string | null;
+  accent_image_url: string | null;
+  cleantime_mode: CleantimeMode;
   colors: Color[];
-  programs: Program[];
 }

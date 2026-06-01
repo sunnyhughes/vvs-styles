@@ -1,32 +1,46 @@
 import { Hono } from "hono";
-import type { Color, Program, Shirt, ShirtDetail } from "../../shared/types";
+import type {
+  CleantimeMode,
+  Color,
+  Shirt,
+  ShirtDetail,
+} from "../../shared/types";
 import type { Env } from "../types";
 
 /** Routes mounted under `/api/shirts`. */
 export const shirts = new Hono<{ Bindings: Env }>();
 
-// GET /api/shirts — the full catalog, ordered for a stable grid.
+// GET /api/shirts — the live catalog, ordered for a stable grid. Drafts
+// stay in D1 but never surface here.
 shirts.get("/", async (c) => {
   const { results } = await c.env.DB.prepare(
     `SELECT id, slug, name, base_price_cents, default_image_url, hero_phrase
      FROM shirts
+     WHERE status = 'live'
      ORDER BY id`,
   ).all<Shirt>();
 
   return c.json(results);
 });
 
-// GET /api/shirts/:slug — one shirt plus its color + program options.
+// GET /api/shirts/:slug — one live shirt plus its color options.
 shirts.get("/:slug", async (c) => {
   const slug = c.req.param("slug");
 
   const shirt = await c.env.DB.prepare(
-    `SELECT id, slug, name, base_price_cents, default_image_url, hero_phrase
+    `SELECT id, slug, name, base_price_cents, default_image_url, hero_phrase,
+            category, accent_image_url, cleantime_mode
      FROM shirts
-     WHERE slug = ?`,
+     WHERE slug = ? AND status = 'live'`,
   )
     .bind(slug)
-    .first<Shirt>();
+    .first<
+      Shirt & {
+        category: string | null;
+        accent_image_url: string | null;
+        cleantime_mode: CleantimeMode;
+      }
+    >();
 
   if (!shirt) {
     return c.json({ error: "Shirt not found" }, 404);
@@ -42,15 +56,5 @@ shirts.get("/:slug", async (c) => {
     .bind(shirt.id)
     .all<Color>();
 
-  const { results: programs } = await c.env.DB.prepare(
-    `SELECT p.id, p.slug, p.name
-     FROM programs p
-     JOIN shirt_programs sp ON sp.program_id = p.id
-     WHERE sp.shirt_id = ?
-     ORDER BY p.id`,
-  )
-    .bind(shirt.id)
-    .all<Program>();
-
-  return c.json({ ...shirt, colors, programs } satisfies ShirtDetail);
+  return c.json({ ...shirt, colors } satisfies ShirtDetail);
 });

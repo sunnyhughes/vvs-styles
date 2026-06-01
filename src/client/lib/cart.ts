@@ -1,9 +1,10 @@
 import { useSyncExternalStore } from "react";
+import type { CleantimeMode } from "../../shared/types";
 
 /**
  * A line item in the cart. One row per unique option-combination — adding the
- * same shirt with the same program/color/size/clean-time bumps `qty` instead
- * of creating a second line.
+ * same shirt with the same color/size/cleantime bumps `qty` instead of
+ * creating a second line.
  */
 export interface CartItem {
   /** Stable id derived from the chosen options; identical configs share one. */
@@ -12,12 +13,17 @@ export interface CartItem {
   name: string;
   unitPriceCents: number;
   imageUrl: string;
-  program: string;
   color: string;
   colorHex: string;
   size: string;
-  /** Years clean printed on the shirt; 0 means the buyer left it blank. */
-  cleanTimeYears: number;
+  /** Per-shirt customization mode — drives how cleantimeValue is rendered. */
+  cleantimeMode: CleantimeMode;
+  /**
+   * Numeric value for the customization slot. For 'years' it's years clean
+   * (e.g. 3.5); for 'year_clean' it's a year (e.g. 1953). 0 means the buyer
+   * left it blank or the shirt takes no customization.
+   */
+  cleantimeValue: number;
   qty: number;
 }
 
@@ -28,9 +34,13 @@ const STORAGE_KEY = "vvs-cart";
 
 /** Builds the stable line id for an option-combination. */
 function lineIdFor(item: NewCartItem): string {
-  return [item.slug, item.program, item.color, item.size, item.cleanTimeYears].join(
-    "|",
-  );
+  return [
+    item.slug,
+    item.color,
+    item.size,
+    item.cleantimeMode,
+    item.cleantimeValue,
+  ].join("|");
 }
 
 /** Reads the persisted cart, tolerating missing or corrupt storage. */
@@ -152,8 +162,9 @@ export function useCartDrawerOpen(): boolean {
   return useSyncExternalStore(subscribe, isCartOpen, isCartOpen);
 }
 
-/** Formats years-clean for display, e.g. 3.5 → "3.5 Years Clean". 0 → "". */
-export function formatCleanTime(years: number): string {
-  if (!years || years <= 0) return "";
-  return `${years} ${years === 1 ? "Year" : "Years"} Clean`;
+/** Formats the customization slot for display, based on mode + value. */
+export function formatCleanTime(mode: CleantimeMode, value: number): string {
+  if (!value || value <= 0 || mode === "none") return "";
+  if (mode === "year_clean") return `Since ${value}`;
+  return `${value} ${value === 1 ? "Year" : "Years"} Clean`;
 }

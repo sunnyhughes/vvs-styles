@@ -1,13 +1,15 @@
 import { applyD1Migrations, env, SELF } from "cloudflare:test";
 import { beforeAll, describe, expect, it } from "vitest";
-import type { Color, Program, Shirt, ShirtDetail } from "../../src/shared/types";
+import type { Color, Shirt, ShirtDetail } from "../../src/shared/types";
 
 beforeAll(async () => {
   await applyD1Migrations(env.DB, env.TEST_MIGRATIONS);
 
   const shirt = await env.DB.prepare(
-    `INSERT INTO shirts (slug, name, base_price_cents, default_image_url, hero_phrase)
-     VALUES (?, ?, ?, ?, ?) RETURNING id`,
+    `INSERT INTO shirts
+       (slug, name, base_price_cents, default_image_url, hero_phrase,
+        category, status, cleantime_mode)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id`,
   )
     .bind(
       "test-tee",
@@ -15,19 +17,16 @@ beforeAll(async () => {
       2800,
       "/placeholder-shirt.svg",
       "Still Here, Still Clean",
+      "Recovery",
+      "live",
+      "years",
     )
     .first<{ id: number }>();
 
   const color = await env.DB.prepare(
     `INSERT INTO colors (name, hex) VALUES (?, ?) RETURNING id`,
   )
-    .bind("Forest Green", "#166534")
-    .first<{ id: number }>();
-
-  const program = await env.DB.prepare(
-    `INSERT INTO programs (slug, name) VALUES (?, ?) RETURNING id`,
-  )
-    .bind("aa", "Alcoholics Anonymous")
+    .bind("White", "#FFFFFF")
     .first<{ id: number }>();
 
   await env.DB.prepare(
@@ -35,15 +34,27 @@ beforeAll(async () => {
   )
     .bind(shirt!.id, color!.id)
     .run();
+
+  // A draft shirt — must not surface in either endpoint.
   await env.DB.prepare(
-    `INSERT INTO shirt_programs (shirt_id, program_id) VALUES (?, ?)`,
+    `INSERT INTO shirts
+       (slug, name, base_price_cents, default_image_url, hero_phrase, status, cleantime_mode)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
   )
-    .bind(shirt!.id, program!.id)
+    .bind(
+      "draft-tee",
+      "Draft Tee",
+      2800,
+      "/placeholder-shirt.svg",
+      "Hidden",
+      "draft",
+      "none",
+    )
     .run();
 });
 
 describe("GET /api/shirts", () => {
-  it("returns 200 with a JSON array", async () => {
+  it("returns 200 with a JSON array of live shirts", async () => {
     const res = await SELF.fetch("https://example.com/api/shirts");
 
     expect(res.status).toBe(200);
@@ -52,7 +63,7 @@ describe("GET /api/shirts", () => {
     expect(body.length).toBeGreaterThan(0);
   });
 
-  it("returns the seeded shirt with every catalog field", async () => {
+  it("returns the live shirt with every catalog field", async () => {
     const res = await SELF.fetch("https://example.com/api/shirts");
     const body = (await res.json()) as Shirt[];
 
@@ -65,27 +76,37 @@ describe("GET /api/shirts", () => {
       hero_phrase: "Still Here, Still Clean",
     });
   });
+
+  it("hides draft shirts from the catalog", async () => {
+    const res = await SELF.fetch("https://example.com/api/shirts");
+    const body = (await res.json()) as Shirt[];
+    expect(body.find((s) => s.slug === "draft-tee")).toBeUndefined();
+  });
 });
 
 describe("GET /api/shirts/:slug", () => {
-  it("returns the shirt with its color and program options", async () => {
+  it("returns the shirt with its color options + customization metadata", async () => {
     const res = await SELF.fetch("https://example.com/api/shirts/test-tee");
 
     expect(res.status).toBe(200);
     const body = (await res.json()) as ShirtDetail;
-    expect(body.slug).toBe("test-tee");
+    expect(body).toMatchObject({
+      slug: "test-tee",
+      category: "Recovery",
+      cleantime_mode: "years",
+      accent_image_url: null,
+    });
     expect(body.colors).toEqual([
       expect.objectContaining<Partial<Color>>({
-        name: "Forest Green",
-        hex: "#166534",
+        name: "White",
+        hex: "#FFFFFF",
       }),
     ]);
-    expect(body.programs).toEqual([
-      expect.objectContaining<Partial<Program>>({
-        slug: "aa",
-        name: "Alcoholics Anonymous",
-      }),
-    ]);
+  });
+
+  it("returns 404 for a draft shirt", async () => {
+    const res = await SELF.fetch("https://example.com/api/shirts/draft-tee");
+    expect(res.status).toBe(404);
   });
 
   it("returns 404 for a slug that does not exist", async () => {

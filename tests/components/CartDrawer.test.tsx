@@ -16,11 +16,11 @@ const item: NewCartItem = {
   name: "Still Here Tee",
   unitPriceCents: 2800,
   imageUrl: "/placeholder-shirt.svg",
-  program: "Alcoholics Anonymous",
-  color: "Forest Green",
-  colorHex: "#166534",
+  color: "White",
+  colorHex: "#FFFFFF",
   size: "M",
-  cleanTimeYears: 0,
+  cleantimeMode: "years",
+  cleantimeValue: 0,
 };
 
 function renderDrawer() {
