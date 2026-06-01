@@ -4,7 +4,9 @@ import { CartDrawer } from "./components/CartDrawer";
 import { Footer } from "./components/Footer";
 import { Nav } from "./components/Nav";
 import { Cart } from "./pages/Cart";
+import { Checkout } from "./pages/Checkout";
 import { Landing } from "./pages/Landing";
+import { OrderConfirmation } from "./pages/OrderConfirmation";
 import { Product } from "./pages/Product";
 import { Shop } from "./pages/Shop";
 
@@ -41,6 +43,11 @@ export function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:slug" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route
+            path="/order/confirmation/:id"
+            element={<OrderConfirmation />}
+          />
           <Route path="*" element={<ComingSoon />} />
         </Routes>
       </Layout>

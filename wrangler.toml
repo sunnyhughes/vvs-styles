@@ -14,3 +14,10 @@ database_name = "vvs-styles"
 # which key off `database_name`. Before the first `wrangler deploy`, run
 # `wrangler d1 create vvs-styles` and paste the real ID it prints here.
 database_id = "1ebb4f68-24c1-4052-b4a8-4d40157de8d8"
+
+# Public runtime config. STRIPE_PUBLISHABLE_KEY is designed to live in client
+# JS — Stripe prefixes it `pk_` ("publishable") to make that explicit. The
+# secret key (`sk_...`) is NOT here; it lives in `.dev.vars` locally and is
+# set via `wrangler secret put STRIPE_SECRET_KEY` in production.
+[vars]
+STRIPE_PUBLISHABLE_KEY = "pk_test_51TY6KYAZyNYHbgj17x8szFMHPvJ2OXoPwVle9Jm9WE1Nc6oAj0OfT7eTh1c5uud7YgVbHUxn026BHuvcm9ma6OoJ008sYoQBKm"

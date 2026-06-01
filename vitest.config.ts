@@ -10,6 +10,9 @@ export default defineConfig(async () => {
 
   return {
     test: {
+      // Worker pool cold-start + per-test isolated storage can push some
+      // tests past the 5s default; 15s leaves comfortable headroom.
+      testTimeout: 15000,
       projects: [
         {
           plugins: [
@@ -18,7 +21,14 @@ export default defineConfig(async () => {
               // D1 migrations are passed as a binding so tests can apply them
               // with `applyD1Migrations(env.DB, env.TEST_MIGRATIONS)`.
               miniflare: {
-                bindings: { TEST_MIGRATIONS: migrations },
+                bindings: {
+                  TEST_MIGRATIONS: migrations,
+                  // Stripe keys are stubs: tests mock `src/worker/lib/stripe`
+                  // so the SDK is never instantiated with these — they only
+                  // satisfy the Env type at runtime.
+                  STRIPE_PUBLISHABLE_KEY: "pk_test_dummy",
+                  STRIPE_SECRET_KEY: "sk_test_dummy",
+                },
               },
             }),
           ],

@@ -10,6 +10,9 @@ declare global {
       DB: D1Database;
       /** Migrations injected by `vitest.config.ts` via `readD1Migrations`. */
       TEST_MIGRATIONS: D1Migration[];
+      /** Stripe keys — stubbed in tests; real values live in `wrangler.toml` + `.dev.vars`. */
+      STRIPE_PUBLISHABLE_KEY: string;
+      STRIPE_SECRET_KEY: string;
     }
   }
 }

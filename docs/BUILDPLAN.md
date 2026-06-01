@@ -4,7 +4,7 @@ _This file is the phased build plan for the project. It's the bridge between `do
 
 > **Status:** In progress
 > **Last updated:** 2026-06-01
-> **Current phase:** Phase 3 (checkout + payments) — not started. Phase 2.5 shipped 2026-06-01, live at https://vvs-styles.sunshinehughes.workers.dev
+> **Current phase:** Phase 3.5 (PayPal + Venmo) — blocked on PayPal Business account upgrade. Phase 3 (Stripe checkout) shipped 2026-06-01, live at https://vvs-styles.sunshinehughes.workers.dev
 
 ---
 
@@ -217,19 +217,61 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 - Manual E2E: founder places a real test order via card + sandbox PayPal.
 
 **Done-when:**
-- [ ] Visitor completes a card payment (real test card) and is redirected to confirmation page.
-- [ ] Visitor completes a PayPal sandbox payment.
-- [ ] Order row exists in D1 with line items, shipping address, and payment reference.
-- [ ] All automated tests pass.
-- [ ] Stripe + PayPal production secrets configured (sandbox until launch).
+- [x] Visitor completes a card payment (real test card) and is redirected to confirmation page. _Phone-tested 2026-06-01 with `4242 4242 4242 4242`; order ended up `status='paid'` in remote D1._
+- [ ] Visitor completes a PayPal sandbox payment. _Moved to Phase 3.5._
+- [x] Order row exists in D1 with line items, shipping address, and payment reference. _Confirmed via `wrangler d1 execute … SELECT … FROM orders` against the remote DB._
+- [x] All automated tests pass. _45/45 — adds 13 new (checkout + orders API)._
+- [x] Stripe production secrets configured (test mode until launch). _Publishable in `wrangler.toml [vars]`; secret via `wrangler secret put STRIPE_SECRET_KEY`. PayPal deferred to Phase 3.5._
 
-**Session budget:** 2+ sessions (payment integrations are fiddly).
+**Session budget:** 2+ sessions (payment integrations are fiddly). _Actual: 1 session, Stripe scope only._
 
 **Risks / unknowns:**
 - Stripe and PayPal both require account creation up front — block on this if accounts don't exist. _Update 2026-05-29: Stripe account created — finish its setup using the live Worker URL (https://vvs-styles.sunshinehughes.workers.dev) as the business URL. Founder has personal CashApp + PayPal; note that Cash App Pay runs **through Stripe** (not the personal $cashtag), and PayPal + Venmo via the PayPal SDK want a free **PayPal Business** account — upgrade before wiring Venmo._
 - CashApp Pay availability via Stripe varies by region — verify before promising it in UI.
 - Each payment provider's mobile sheet has different return behavior — test on a real phone, not just desktop.
 - PRD §7 calls out a possibly-false assumption that all four methods can be embedded in one checkout — verify Venmo via PayPal SDK works in our integration shape.
+
+---
+
+### Phase 3.5 — PayPal + Venmo
+
+**Goal:** Add PayPal and Venmo as checkout options alongside the Stripe Payment Element from Phase 3. Once shipped, PRD §4 story 3 (card / CashApp / PayPal / Venmo) is fully covered.
+
+**Context to load:** `docs/PRD.md` §4 story 3, §7 (PayPal SDK assumption). `docs/DESIGN.md` §2 (checkout screen). Phase 3 files: `src/client/pages/Checkout.tsx`, `src/client/components/StripeCheckout.tsx`, `src/worker/routes/checkout.ts`, `src/worker/routes/orders.ts`.
+
+**Prerequisites (Sunshine):**
+- Upgrade personal PayPal → **PayPal Business** account (free).
+- Create a sandbox app at developer.paypal.com → grab `client_id` + `client_secret`.
+
+**Files this phase creates/modifies:**
+- `src/client/components/PaymentMethodPicker.tsx` *(new)* — Headless UI `RadioGroup` to choose between "Card / Cash App / Apple / Google Pay" (Stripe Payment Element) and "PayPal / Venmo" (PayPal SDK). Two widgets, one picker.
+- `src/client/components/PayPalCheckout.tsx` *(new)* — mounts the PayPal SDK Buttons component (covers PayPal + Venmo).
+- `src/client/pages/Checkout.tsx` — wrap Stripe + PayPal in the picker; the chosen branch renders.
+- `src/worker/routes/checkout.ts` — add a sibling `POST /api/checkout/paypal-order` that creates a PayPal order via `@paypal/checkout-server-sdk` (server-side price recalculation reused from the Stripe path).
+- `src/worker/routes/orders.ts` — extend `POST /api/orders/:id/confirm` to handle a `paypal_order_id` body, verifying the order via PayPal's REST API before flipping `status='paid'`.
+- `src/worker/types.ts` — add `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` to `Env`.
+- `.dev.vars.example` — add `PAYPAL_CLIENT_ID` + `PAYPAL_CLIENT_SECRET`.
+- `wrangler.toml [vars]` — add `PAYPAL_CLIENT_ID` (it's client-side; the secret stays in `wrangler secret`).
+- `src/worker/routes/config.ts` — also expose `paypalClientId` to the client.
+
+**Tests this phase adds:**
+- `tests/api/checkout.test.ts` — extend with `POST /api/checkout/paypal-order` happy path + price-tampering guard (same pattern as the Stripe path).
+- `tests/api/orders.test.ts` — extend `/confirm` to cover the PayPal branch (mock PayPal capture).
+
+**Done-when:**
+- [ ] Visitor completes a PayPal sandbox payment from a phone; lands on `/order/confirmation/:id` with `status='paid'`.
+- [ ] Venmo flow works (same SDK widget — usually surfaces automatically on US mobile browsers).
+- [ ] D1 stores the PayPal order id alongside (or as an alternative to) `stripe_payment_intent_id`.
+- [ ] All tests pass.
+- [ ] PayPal production credentials staged (sandbox until launch).
+
+**Session budget:** 1–2 sessions.
+
+**Risks / unknowns:**
+- **Blocker until PayPal Business is upgraded** — don't start this phase before that's done.
+- PayPal SDK's React wrapper (`@paypal/react-paypal-js`) is the obvious pick; double-check it works inside Vite + React 19 before committing to it.
+- Two separate widgets means two confirm paths in `/api/orders/:id/confirm`; keep the branching shallow.
+- Venmo regional availability in the PayPal SDK varies — verify on a real US phone.
 
 ---
 
@@ -313,6 +355,7 @@ A short append-only log of when the plan changed and why. Helps future-you under
 | 2026-05-29 | Phase 2 / new Phase 2.5 | Peer review closed Week 2 milestone; added Phase 2.5 | Shared the live URL with peers in recovery. Feedback: concept + layout liked; wants a real t-shirt image, basic color set (white/black/gray/red/pink/blue), the program selector dropped (only matters when a phrase is program-specific — returns as a `/shop` category filter at >10 designs), and a brand mark for the neck tag. Inserted **Phase 2.5** to fold this in before payment. PRD §4/§5/§7/§8 + DESIGN §2/§3/§7/§8 updated to match. |
 | 2026-05-29 | Phases 3 & 4 | De-risked | Supplier risk resolved — Printify + Printful accounts created (pick one for Phase 4). Stripe account created (complete setup with the live Worker URL). Noted Cash App Pay runs through Stripe and PayPal/Venmo wants a PayPal Business account. |
 | 2026-06-01 | Phase 2.5 | Shipped | Drop-program-selector polish landed. Migration 0003 dropped `programs`/`shirt_programs`, added `status` ('draft'/'live'), `cleantime_mode` ('none'/'years'/'year_clean'), `category`, `accent_image_url` to `shirts`. Catalog grew to 25 phrases — 7 live (one per cleantime_mode variant covered, three categories represented), 18 draft for future flips. Six basic colors (white/black/gray/red/pink/blue), every live shirt offers all six. `ShirtPreview` now renders a stand-in tee silhouette tinted by the chosen color with phrase + optional accent overlaid; "stand-in" flag in corner pending Phase 4 mockups. Cart line items dropped the `program` field. Deploy hit a wrangler-auth snag: pre-existing `CLOUDFLARE_API_TOKEN` blocked `wrangler whoami`; resolved by `unset CLOUDFLARE_API_TOKEN` + `wrangler login` OAuth. 32/32 tests green. |
+| 2026-06-01 | Phase 3 / new Phase 3.5 | Shipped Phase 3 (Stripe only); inserted Phase 3.5 (PayPal + Venmo) | Stripe card payment live end-to-end: `/checkout` (shipping form + Stripe Payment Element) → `/order/confirmation/:id`. Migration 0004 added `orders` (UUID id — non-enumerable confirmation URLs) + `order_items` (denormalized snapshot of name/price at purchase time). Worker routes: `POST /api/checkout/payment-intent` (server-side price recalculation from D1, never trusts client `unitPriceCents`), `POST /api/orders/:id/confirm` (re-verifies the PI with Stripe and checks amount matches — never trusts `?redirect_status` from the redirect), `GET /api/orders/:id`, `GET /api/config` (publishable key). Used Stripe **Payment Element** instead of a custom method picker so Cash App Pay / Apple / Google Pay surface from one widget when enabled in the dashboard — zero client code per method. PayPal + Venmo scope cut out of Phase 3 because founder is still on personal PayPal; **Phase 3.5** inserted to handle it once Business is upgraded. Bumped `testTimeout` to 15s (vitest-pool-workers cold-start) and swapped `db.batch()` for sequential inserts after 4 tests timed out. 45/45 tests green; phone test with `4242` card landed in D1 as `status='paid'`. Test keys were briefly pasted into source — restored to `string` type declarations, secret moved to `.dev.vars` + `wrangler secret put`; founder to roll test keys post-ship (they appeared in chat transcript). |
 
 ---
 

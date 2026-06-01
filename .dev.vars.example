@@ -1,4 +1,6 @@
 # Local-only environment variables for `wrangler dev`. Copy to .dev.vars and fill in.
 # Production values go via `wrangler secret put`. Do NOT commit .dev.vars.
-#
-# Phase 0: no secrets needed yet. Add Stripe/PayPal/dropship keys in later phases.
+
+# Stripe — grab from dashboard.stripe.com → Developers → API keys (Test mode).
+# The publishable key (pk_*) lives in `wrangler.toml [vars]`, not here.
+STRIPE_SECRET_KEY=sk_test_xxx
