@@ -4,7 +4,7 @@ _This file is the phased build plan for the project. It's the bridge between `do
 
 > **Status:** In progress
 > **Last updated:** 2026-06-05
-> **Current phase:** Phase 4 (Printify order routing + confirmation email) — supplier locked to **Printify**, intro price **$24.99**. Phase 3.5 (PayPal + Venmo) deferred (not launch-blocking; waiting on a business email for PayPal Business). Phase 3 (Stripe checkout) shipped 2026-06-01, live at https://vvs-styles.sunshinehughes.workers.dev
+> **Current phase:** Phase 4 (Printify order routing + confirmation email) — **code-complete 2026-06-27**: per-color product imagery shipped and the hybrid fulfillment flow (auto-submit plain shirts to Printify, founder-email personalized ones, customer confirmation email) is built and tested. Remaining before close: plug in real Printify/Resend creds + variant map, run the real end-to-end test order, and deploy to remote D1. Supplier locked to **Printify**, intro price **$24.99**. Phase 3.5 (PayPal + Venmo) deferred (not launch-blocking; waiting on a business email for PayPal Business). Phase 3 (Stripe checkout) shipped 2026-06-01, live at https://vvs-styles.sunshinehughes.workers.dev
 
 ---
 
@@ -281,26 +281,35 @@ Each phase below follows the same structure. Skip what doesn't apply but keep th
 
 **Context to load:** `docs/PRD.md` §4 story 5, §6 (dropship supplier table row, email row), §7 (dropship is the #1 PRD risk). Files from Phase 3.
 
-**Files this phase creates/modifies:**
-- `src/worker/integrations/dropship.ts` — API client for the selected supplier.
-- `src/worker/integrations/email.ts` — transactional email sender (Resend or similar HTTP-based service; Workers don't support SMTP natively).
-- `src/worker/routes/orders.ts` — extend: on payment success, submit to dropship + send confirmation email.
-- `src/worker/templates/order-confirmation.html` — email template.
-- `migrations/0004_order_tracking.sql` — `submitted_to_dropship_at`, `dropship_order_id`, `tracking_url`, `status` columns.
-- `wrangler.toml` updated with email service binding if used.
-- Secrets via `wrangler secret put`: `DROPSHIP_API_KEY`, `EMAIL_API_KEY`.
+**Files this phase creates/modifies:** _(as built 2026-06-27)_
+- `src/worker/integrations/dropship.ts` — Printify orders API client. ✅
+- `src/worker/integrations/email.ts` — Resend HTTP sender + inline customer/founder templates (no separate `.html` file; Workers don't support SMTP). ✅
+- `src/worker/lib/fulfillment.ts` — pure `decideFulfillment` (auto vs manual) + `splitName`. ✅ _(added; not in original plan)_
+- `src/worker/routes/orders.ts` — `/confirm` now routes fulfillment + emails on payment success. ✅
+- `migrations/0006_order_routing.sql` — order tracking columns (`fulfillment_method`, `dropship_order_id`, `submitted_to_dropship_at`, `tracking_url`, `confirmation_email_sent_at`) + `shirt_variants` map table. ✅ _(numbered 0006, not 0004 — 0004 was orders, 0005 was imagery)_
+- `migrations/0005_shirt_color_images.sql` + `seeds/shirts.sql` / `shirt_options.sql` + `public/shirts/<slug>/<color>.<ext>` — per-color product imagery. ✅
+- `scripts/printify-variants.mjs` + `seeds/shirt_variants.sql` (empty) — populate the variant map later. ✅
+- `wrangler.toml` + `.dev.vars.example` — documented optional config. ✅
+- Secrets via `wrangler secret put` (pending real values): `PRINTIFY_API_TOKEN`, `RESEND_API_KEY`; vars `EMAIL_FROM`, `FOUNDER_EMAIL`, `PRINTIFY_SHOP_ID`.
 
 **Tests this phase adds:**
-- `tests/worker/dropship.test.ts` — mocked dropship submission.
-- `tests/worker/email.test.ts` — mocked email send; correct template substitution.
+- `tests/worker/dropship.test.ts` — Printify submission (mocked fetch). ✅
+- `tests/worker/email.test.ts` — Resend send + template content (mocked fetch). ✅
+- `tests/worker/fulfillment.test.ts` — auto/manual routing decision. ✅ _(added)_
+- `tests/api/orders.test.ts` — extended: personalized order routes to manual on confirm. ✅
+
+**Fulfillment design (decided 2026-06-27): HYBRID.** Plain shirts whose every line item resolves in `shirt_variants` are auto-submitted to Printify; any personalized item (or unmapped combo) routes to the founder by email for manual entry. Customer always gets a confirmation email. All external config is optional — with creds unset the worker degrades to the manual path, so the store works before Printify/email are wired and upgrades to auto with no code change once the map is filled.
 
 **Done-when:**
-- [ ] After payment success, the order is submitted to the dropship API and the supplier's order ID is stored.
-- [ ] Customer receives a confirmation email with order number, expected timeline, and a contact line.
+- [x] Per-color product imagery shipped; 6 live shirts; personalization corrected (personalized = clean-and-serene-since + recovering-out-loud). _Commits 881bb0a, 0db4407._
+- [x] On payment success, plain orders auto-submit to Printify and the supplier order id is stored; personalized/unmapped orders route to manual founder email. _Commit e1a3702._
+- [x] Customer receives a confirmation email with order number, timeline, and a contact line. _Built; sends once creds are configured._
+- [x] All automated tests pass. _72/72._
+- [ ] Real values plugged in: Printify token/shop/product_ids → `shirt_variants` filled; Resend key + verified sender domain.
 - [ ] Founder places one full end-to-end real test order using own address and confirms the entire chain works.
-- [ ] All automated tests pass.
+- [ ] Migrations 0005 + 0006 + seeds applied to remote D1; `npm run deploy` live; phone-checked.
 
-**Session budget:** 2 sessions.
+**Session budget:** 2 sessions. _Actual so far: 1 session for imagery + fulfillment code; remaining items are config + deploy._
 
 **Risks / unknowns:**
 - ~~**Phase 4 is blocked until the dropship supplier is selected**~~ _Resolved 2026-06-05: **Printify** chosen for v1 (margin edge; swappable later via `dropship.ts`). Before going live: vet a reputable US Printify shop, order **one sample** to confirm print + the inside neck-tag branding (the detail peers asked for), then wire `src/worker/integrations/dropship.ts` to Printify's API._ Original note: Printify + Printful accounts both created; chose Printify on a quality-vs-cost basis at $24.99 retail.
