@@ -6,9 +6,9 @@ import { ColorPicker } from "../../src/client/components/ColorPicker";
 import type { Color } from "../../src/shared/types";
 
 const colors: Color[] = [
-  { id: 1, name: "Forest Green", hex: "#166534" },
-  { id: 2, name: "Navy", hex: "#1E3A5F" },
-  { id: 3, name: "Cream", hex: "#F5F0E6" },
+  { id: 1, name: "Forest Green", hex: "#166534", image_url: null },
+  { id: 2, name: "Navy", hex: "#1E3A5F", image_url: null },
+  { id: 3, name: "Cream", hex: "#F5F0E6", image_url: null },
 ];
 
 /** Stateful wrapper so a selection actually sticks during the test. */

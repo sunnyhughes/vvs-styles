@@ -15,6 +15,13 @@ export interface Color {
   id: number;
   name: string;
   hex: string;
+  /**
+   * Real product photo of this shirt in this color (e.g. a Printify mockup),
+   * served from `public/shirts/<slug>/<color>.<ext>`. Null until a photo has
+   * been uploaded for the combo — the UI falls back to the shirt's
+   * `default_image_url` in that case.
+   */
+  image_url: string | null;
 }
 
 /**

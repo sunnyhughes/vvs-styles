@@ -10,15 +10,11 @@ export function ShirtCard({ shirt }: { shirt: Shirt }) {
       className="group block rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800 focus-visible:ring-offset-2"
     >
       <div className="relative overflow-hidden rounded-md border border-stone-200 bg-stone-100 shadow-sm">
-        {/* TODO: placeholder image — swap for real product photography (DESIGN §7). */}
         <img
           src={shirt.default_image_url}
-          alt=""
+          alt={shirt.hero_phrase}
           className="aspect-square w-full object-cover"
         />
-        <span className="absolute inset-0 flex items-center justify-center p-4 text-center font-display text-lg text-emerald-900">
-          {shirt.hero_phrase}
-        </span>
       </div>
       <h3 className="mt-2 font-display text-2xl text-emerald-800">
         {shirt.name}

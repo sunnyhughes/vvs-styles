@@ -30,9 +30,9 @@ beforeAll(async () => {
     .first<{ id: number }>();
 
   await env.DB.prepare(
-    `INSERT INTO shirt_colors (shirt_id, color_id) VALUES (?, ?)`,
+    `INSERT INTO shirt_colors (shirt_id, color_id, image_url) VALUES (?, ?, ?)`,
   )
-    .bind(shirt!.id, color!.id)
+    .bind(shirt!.id, color!.id, "/shirts/test-tee/white.png")
     .run();
 
   // A draft shirt — must not surface in either endpoint.
@@ -100,6 +100,7 @@ describe("GET /api/shirts/:slug", () => {
       expect.objectContaining<Partial<Color>>({
         name: "White",
         hex: "#FFFFFF",
+        image_url: "/shirts/test-tee/white.png",
       }),
     ]);
   });

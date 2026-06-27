@@ -65,12 +65,16 @@ export function Product() {
   const { shirt } = state;
   const cleantimeValue = Number(cleanTime) > 0 ? Number(cleanTime) : 0;
 
+  // The selected color's real photo, falling back to the catalog thumbnail
+  // until a per-color mockup has been uploaded for this combo.
+  const colorImage = color?.image_url ?? shirt.default_image_url;
+
   const item: NewCartItem | null = color
     ? {
         slug: shirt.slug,
         name: shirt.name,
         unitPriceCents: shirt.base_price_cents,
-        imageUrl: shirt.default_image_url,
+        imageUrl: colorImage,
         color: color.name,
         colorHex: color.hex,
         size,
@@ -83,12 +87,11 @@ export function Product() {
     <div className="mx-auto max-w-6xl px-4 py-10 lg:grid lg:grid-cols-2 lg:gap-10">
       <div className="lg:sticky lg:top-24 lg:self-start">
         <ShirtPreview
+          imageUrl={colorImage}
           phrase={shirt.hero_phrase}
-          colorHex={color?.hex ?? "#FFFFFF"}
           colorName={color?.name ?? "White"}
           cleantimeMode={shirt.cleantime_mode}
           cleantimeValue={cleantimeValue}
-          accentImageUrl={shirt.accent_image_url}
         />
       </div>
 

@@ -5,12 +5,14 @@
 -- Re-runnable: wipes shirt_colors + shirts first so the seed is the source
 -- of truth. Apply seeds/shirt_options.sql AFTER this file.
 --
--- v1 launches with the 7 'live' shirts. The other 18 are stored as 'draft'
--- so the catalog can grow without re-modeling — flip status to 'live' to
--- surface a shirt on /shop.
+-- v1 launches with the 6 'live' shirts that have real Printify photos. The
+-- rest are stored as 'draft' so the catalog can grow without re-modeling —
+-- flip status to 'live' to surface a shirt on /shop.
 --
--- default_image_url is the stand-in tee mockup; replace per-shirt once
--- Phase 4 picks a print provider and real product photos exist.
+-- default_image_url is the /shop grid thumbnail. Live shirts point at their
+-- real white (or only-available) front mockup under /shirts/<slug>/. Drafts
+-- and shirts without photos keep the stand-in placeholder until imagery lands.
+-- Per-color photos are wired in seeds/shirt_options.sql (shirt_colors.image_url).
 
 DELETE FROM shirt_colors;
 DELETE FROM shirts;
@@ -19,16 +21,17 @@ DELETE FROM sqlite_sequence WHERE name = 'shirts';
 INSERT INTO shirts
   (slug, name, base_price_cents, default_image_url, hero_phrase, category, accent_image_url, status, cleantime_mode)
 VALUES
-  -- ── v1 live set ─────────────────────────────────────────────────────
-  ('still-here',              'Still Here Tee',          2499, '/placeholder-shirt.svg', 'Still Here, Still Clean',         'Recovery',   NULL, 'live',  'years'),
-  ('recovering-out-loud',     'Out Loud Tee',            2499, '/placeholder-shirt.svg', 'Recovering Out Loud',             'Recovery',   NULL, 'live',  'none'),
-  ('worst-idea',              'Worst Idea Tee',          2499, '/placeholder-shirt.svg', 'I Survived My Own Worst Idea',    'Recovery',   NULL, 'live',  'none'),
-  ('whole-vibe',              'Whole Vibe Tee',          2499, '/placeholder-shirt.svg', 'Cleantime Is a Whole Vibe',       'Recovery',   NULL, 'live',  'years'),
-  ('feel-deal-heal',          'Feel Deal Heal Tee',      2499, '/placeholder-shirt.svg', 'Feel, Deal & Heal',               'Healing',    NULL, 'live',  'none'),
-  ('past-future',             'Past Tee',                2499, '/placeholder-shirt.svg', 'Past Does NOT Dictate Future',    'Motivation', NULL, 'live',  'none'),
-  ('clean-and-serene-since',  'Clean and Serene Tee',    2499, '/placeholder-shirt.svg', 'Clean and Serene Since',          'Recovery',   NULL, 'live',  'year_clean'),
+  -- ── v1 live set (real Printify photos under /shirts/<slug>/) ────────
+  ('still-here',              'Still Here Tee',          2499, '/shirts/still-here/white.png',             'Still Here, Still Clean',         'Recovery',   NULL, 'live',  'years'),
+  ('recovering-out-loud',     'Out Loud Tee',            2499, '/shirts/recovering-out-loud/white.png',    'Recovering Out Loud',             'Recovery',   NULL, 'live',  'none'),
+  ('worst-idea',              'Worst Idea Tee',          2499, '/shirts/worst-idea/white.png',             'I Survived My Own Worst Idea',    'Recovery',   NULL, 'live',  'none'),
+  ('whole-vibe',              'Whole Vibe Tee',          2499, '/shirts/whole-vibe/white.png',             'Cleantime Is a Whole Vibe',       'Recovery',   NULL, 'live',  'years'),
+  ('feel-deal-heal',          'Feel Deal Heal Tee',      2499, '/shirts/feel-deal-heal/white.jpg',         'Feel, Deal & Heal',               'Healing',    NULL, 'live',  'none'),
+  ('clean-and-serene-since',  'Clean and Serene Tee',    2499, '/shirts/clean-and-serene-since/gray.png',  'Clean and Serene Since',          'Recovery',   NULL, 'live',  'year_clean'),
 
   -- ── drafts (hidden from /shop until flipped to 'live') ──────────────
+  -- past-future: hidden until real product photos exist (had only a concept photo).
+  ('past-future',             'Past Tee',                2499, '/placeholder-shirt.svg', 'Past Does NOT Dictate Future',    'Motivation', NULL, 'draft', 'none'),
   ('lies-dies-flies',             'Lies Dies Flies Tee',          2499, '/placeholder-shirt.svg', 'No Matter Who Lies, Dies, or Flies',  'Recovery', NULL, 'draft', 'none'),
   ('dont-share-just-listen',      'Just Listen Tee',              2499, '/placeholder-shirt.svg', 'Don''t Share, Just Listen',           'Recovery', NULL, 'draft', 'none'),
   ('kiss',                        'K.I.S.S. Tee',                 2499, '/placeholder-shirt.svg', 'K.I.S.S.',                            'Recovery', NULL, 'draft', 'none'),

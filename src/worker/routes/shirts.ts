@@ -47,7 +47,7 @@ shirts.get("/:slug", async (c) => {
   }
 
   const { results: colors } = await c.env.DB.prepare(
-    `SELECT c.id, c.name, c.hex
+    `SELECT c.id, c.name, c.hex, sc.image_url
      FROM colors c
      JOIN shirt_colors sc ON sc.color_id = c.id
      WHERE sc.shirt_id = ?
