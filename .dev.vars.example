@@ -4,3 +4,16 @@
 # Stripe — grab from dashboard.stripe.com → Developers → API keys (Test mode).
 # The publishable key (pk_*) lives in `wrangler.toml [vars]`, not here.
 STRIPE_SECRET_KEY=sk_test_xxx
+
+# ── Phase 4: fulfillment + email (all OPTIONAL) ──────────────────────────────
+# Leave these blank to run the store on the manual fulfillment path (orders are
+# emailed to the founder; nothing is auto-sent to Printify). Fill them in to
+# turn on auto-submit for plain shirts + transactional email.
+
+# Resend — resend.com → API Keys. Needs a verified sender domain for delivery.
+RESEND_API_KEY=re_xxx
+# Printify — printify.com → My Profile → Connections → Personal Access Tokens.
+PRINTIFY_API_TOKEN=xxx
+
+# Non-secret config also lives in `wrangler.toml [vars]` (EMAIL_FROM,
+# FOUNDER_EMAIL, PRINTIFY_SHOP_ID); set them there, not here.

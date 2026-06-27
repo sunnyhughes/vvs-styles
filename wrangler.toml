@@ -21,3 +21,12 @@ database_id = "1ebb4f68-24c1-4052-b4a8-4d40157de8d8"
 # set via `wrangler secret put STRIPE_SECRET_KEY` in production.
 [vars]
 STRIPE_PUBLISHABLE_KEY = "pk_test_51TY6KYAZyNYHbgj17x8szFMHPvJ2OXoPwVle9Jm9WE1Nc6oAj0OfT7eTh1c5uud7YgVbHUxn026BHuvcm9ma6OoJ008sYoQBKm"
+
+# Phase 4 fulfillment config (non-secret). The matching secrets —
+# RESEND_API_KEY and PRINTIFY_API_TOKEN — go via `wrangler secret put`, not
+# here. With any of these unset the worker degrades to the manual founder
+# fulfillment path, so the store stays functional before Printify/email are
+# wired. Uncomment + fill with real values to go live.
+# EMAIL_FROM = "orders@vvsstyles.com"             # verified Resend sender
+# FOUNDER_EMAIL = "sunshinehughes2011@gmail.com"  # where manual-order alerts go
+# PRINTIFY_SHOP_ID = "0000000"                     # from GET /v1/shops.json

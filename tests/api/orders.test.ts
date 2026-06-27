@@ -151,6 +151,38 @@ describe("POST /api/orders/:id/confirm", () => {
     expect(row?.status).toBe("paid");
   });
 
+  it("routes a personalized order to manual fulfillment on confirm", async () => {
+    // seedOrder inserts a 'years' (personalized) item, and the test env has no
+    // Printify/Resend config — so fulfillment must land on the manual path
+    // without throwing or blocking the paid response.
+    const orderId = await seedOrder(2499, "pi_fulfill_001");
+    stripeMock.nextRetrieve = {
+      id: "pi_fulfill_001",
+      status: "succeeded",
+      amount: 2499,
+    };
+
+    const res = await SELF.fetch(
+      `https://example.com/api/orders/${orderId}/confirm`,
+      { method: "POST" },
+    );
+    expect(res.status).toBe(200);
+
+    const row = await env.DB.prepare(
+      `SELECT status, fulfillment_method, dropship_order_id
+       FROM orders WHERE id = ?`,
+    )
+      .bind(orderId)
+      .first<{
+        status: string;
+        fulfillment_method: string | null;
+        dropship_order_id: string | null;
+      }>();
+    expect(row?.status).toBe("paid");
+    expect(row?.fulfillment_method).toBe("manual");
+    expect(row?.dropship_order_id).toBeNull();
+  });
+
   it("rejects when the PI amount does not match the order total", async () => {
     const orderId = await seedOrder(2800, "pi_mismatch_001");
     stripeMock.nextRetrieve = {

@@ -1,0 +1,25 @@
+-- Variant "phone book": our (shirt_slug, color, size) -> Printify ids.
+-- Apply against the live D1 with:
+--   wrangler d1 execute vvs-styles --remote --file=seeds/shirt_variants.sql
+--
+-- Re-runnable: wipes the table before reseeding.
+--
+-- EMPTY ON PURPOSE for now. With no rows, every order falls back to the manual
+-- founder-fulfillment path (see migration 0006). To turn ON auto-submit for a
+-- PLAIN shirt:
+--   1. Run scripts/printify-variants.mjs <product_id> for that shirt to list
+--      its Printify variant ids + titles.
+--   2. Add one row per color+size we sell, mapping the Printify title's color
+--      to our color name ('White','Black','Gray','Red','Pink','Blue') and size
+--      ('S','M','L','XL','2XL').
+--   3. Re-apply this file. No code change needed.
+--
+-- Only the 4 PLAIN live shirts benefit (worst-idea, still-here, whole-vibe,
+-- feel-deal-heal). Personalized shirts always go manual, so they need no rows.
+--
+-- Example (replace ids with real ones from the script):
+--   INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printify_variant_id) VALUES
+--     ('worst-idea', 'White', 'S',  '<product_id>', 11111),
+--     ('worst-idea', 'White', 'M',  '<product_id>', 11112);
+
+DELETE FROM shirt_variants;
