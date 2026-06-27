@@ -22,10 +22,10 @@ INSERT INTO shirts
   (slug, name, base_price_cents, default_image_url, hero_phrase, category, accent_image_url, status, cleantime_mode)
 VALUES
   -- ── v1 live set (real Printify photos under /shirts/<slug>/) ────────
-  ('still-here',              'Still Here Tee',          2499, '/shirts/still-here/white.png',             'Still Here, Still Clean',         'Recovery',   NULL, 'live',  'years'),
-  ('recovering-out-loud',     'Out Loud Tee',            2499, '/shirts/recovering-out-loud/white.png',    'Recovering Out Loud',             'Recovery',   NULL, 'live',  'none'),
+  ('still-here',              'Still Here Tee',          2499, '/shirts/still-here/white.png',             'Still Here, Still Clean',         'Recovery',   NULL, 'live',  'none'),
+  ('recovering-out-loud',     'Out Loud Tee',            2499, '/shirts/recovering-out-loud/white.png',    'Recovering Out Loud',             'Recovery',   NULL, 'live',  'year_clean'),
   ('worst-idea',              'Worst Idea Tee',          2499, '/shirts/worst-idea/white.png',             'I Survived My Own Worst Idea',    'Recovery',   NULL, 'live',  'none'),
-  ('whole-vibe',              'Whole Vibe Tee',          2499, '/shirts/whole-vibe/white.png',             'Cleantime Is a Whole Vibe',       'Recovery',   NULL, 'live',  'years'),
+  ('whole-vibe',              'Whole Vibe Tee',          2499, '/shirts/whole-vibe/white.png',             'Cleantime Is a Whole Vibe',       'Recovery',   NULL, 'live',  'none'),
   ('feel-deal-heal',          'Feel Deal Heal Tee',      2499, '/shirts/feel-deal-heal/white.jpg',         'Feel, Deal & Heal',               'Healing',    NULL, 'live',  'none'),
   ('clean-and-serene-since',  'Clean and Serene Tee',    2499, '/shirts/clean-and-serene-since/gray.png',  'Clean and Serene Since',          'Recovery',   NULL, 'live',  'year_clean'),
 
