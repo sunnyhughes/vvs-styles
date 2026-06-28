@@ -62,7 +62,18 @@ INSERT INTO _img (slug, color, url) VALUES
   ('feel-deal-heal','Red','/shirts/feel-deal-heal/red.jpg'),
   ('feel-deal-heal','Blue','/shirts/feel-deal-heal/blue.jpg'),
   -- clean-and-serene-since (1/6 — only gray mockup so far)
-  ('clean-and-serene-since','Gray','/shirts/clean-and-serene-since/gray.png');
+  ('clean-and-serene-since','Gray','/shirts/clean-and-serene-since/gray.png'),
+  -- recovery-est (4/6 — no red/pink front mockup yet)
+  ('recovery-est','White','/shirts/recovery-est/white.png'),
+  ('recovery-est','Black','/shirts/recovery-est/black.png'),
+  ('recovery-est','Gray','/shirts/recovery-est/gray.png'),
+  ('recovery-est','Blue','/shirts/recovery-est/blue.png'),
+  -- listenin (5/6 — no red front mockup yet)
+  ('listenin','White','/shirts/listenin/white.png'),
+  ('listenin','Black','/shirts/listenin/black.png'),
+  ('listenin','Gray','/shirts/listenin/gray.png'),
+  ('listenin','Pink','/shirts/listenin/pink.png'),
+  ('listenin','Blue','/shirts/listenin/blue.png');
 
 UPDATE shirt_colors
 SET image_url = (

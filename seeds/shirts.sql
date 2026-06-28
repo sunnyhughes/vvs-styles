@@ -49,4 +49,8 @@ VALUES
   ('safe-place-love',             'Safe Place Love Tee',          2499, '/placeholder-shirt.svg', 'My Safe Place Is LOVE',               'Healing',  NULL, 'draft', 'none'),
   ('love-hurts-heals',            'Love Hurts Heals Tee',         2499, '/placeholder-shirt.svg', 'Love Hurts & Heals',                  'Healing',  NULL, 'draft', 'none'),
   ('power-of-we',                 'Power of WE Tee',              2499, '/placeholder-shirt.svg', 'Power of the "WE"',                   'Recovery', NULL, 'draft', 'none'),
-  ('principles-before-personality','Principles Before Personality Tee', 2499, '/placeholder-shirt.svg', 'Principles Before Personality or Prestige', 'Recovery', NULL, 'draft', 'none');
+  ('principles-before-personality','Principles Before Personality Tee', 2499, '/placeholder-shirt.svg', 'Principles Before Personality or Prestige', 'Recovery', NULL, 'draft', 'none'),
+
+  -- ── drafts WITH real photos (ready to flip 'live' after review) ─────
+  ('recovery-est',                'Recovery Est. Tee',            2499, '/shirts/recovery-est/white.png', 'Recovery Est.',                  'Recovery', NULL, 'draft', 'year_clean'),
+  ('listenin',                    'Good E.S.H. Tee',              2499, '/shirts/listenin/white.png',     'I''m Here for the Good E.S.H.',  'Recovery', NULL, 'draft', 'none');
