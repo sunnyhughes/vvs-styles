@@ -27,6 +27,6 @@ STRIPE_PUBLISHABLE_KEY = "pk_test_51TY6KYAZyNYHbgj17x8szFMHPvJ2OXoPwVle9Jm9WE1Nc
 # here. With any of these unset the worker degrades to the manual founder
 # fulfillment path, so the store stays functional before Printify/email are
 # wired. Uncomment + fill with real values to go live.
-# EMAIL_FROM = "orders@vvsstyles.com"             # verified Resend sender
-# FOUNDER_EMAIL = "sunshinehughes2011@gmail.com"  # where manual-order alerts go
-# PRINTIFY_SHOP_ID = "0000000"                     # from GET /v1/shops.json
+EMAIL_FROM = "orders@vv-styles.com"               # verified Resend sender
+FOUNDER_EMAIL = "esohcreationsllc@gmail.com"      # where manual-order alerts go
+PRINTIFY_SHOP_ID = "27707024"                     # custom-integration shop (API order submission)
