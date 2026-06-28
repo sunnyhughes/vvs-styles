@@ -142,7 +142,7 @@ INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printi
   ('feel-deal-heal','Blue','XL',  '6a3146490b7754dd070f4a08', 11869),
   ('feel-deal-heal','Blue','2XL', '6a3146490b7754dd070f4a08', 11870),
   -- whole-vibe — "Cleantime is a whole VIBE" (Printify product 6a313e2e0b7754dd070f405e)
-  -- Only 3 colors enabled (no Gray/Red/Pink on this product). Blue = Antique Sapphire.
+  -- 5 colors enabled (no Gray yet). Blue = Royal, Pink = Azalea, Red = solid Red.
   ('whole-vibe','White','S',  '6a313e2e0b7754dd070f405e', 38163),
   ('whole-vibe','White','M',  '6a313e2e0b7754dd070f405e', 38177),
   ('whole-vibe','White','L',  '6a313e2e0b7754dd070f405e', 38191),
@@ -153,8 +153,18 @@ INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printi
   ('whole-vibe','Black','L',  '6a313e2e0b7754dd070f405e', 38192),
   ('whole-vibe','Black','XL', '6a313e2e0b7754dd070f405e', 38206),
   ('whole-vibe','Black','2XL','6a313e2e0b7754dd070f405e', 38220),
-  ('whole-vibe','Blue','S',   '6a313e2e0b7754dd070f405e', 42794),
-  ('whole-vibe','Blue','M',   '6a313e2e0b7754dd070f405e', 42797),
-  ('whole-vibe','Blue','L',   '6a313e2e0b7754dd070f405e', 42800),
-  ('whole-vibe','Blue','XL',  '6a313e2e0b7754dd070f405e', 42803),
-  ('whole-vibe','Blue','2XL', '6a313e2e0b7754dd070f405e', 42806);
+  ('whole-vibe','Red','S',    '6a313e2e0b7754dd070f405e', 38160),
+  ('whole-vibe','Red','M',    '6a313e2e0b7754dd070f405e', 38174),
+  ('whole-vibe','Red','L',    '6a313e2e0b7754dd070f405e', 38188),
+  ('whole-vibe','Red','XL',   '6a313e2e0b7754dd070f405e', 38202),
+  ('whole-vibe','Red','2XL',  '6a313e2e0b7754dd070f405e', 38216),
+  ('whole-vibe','Blue','S',   '6a313e2e0b7754dd070f405e', 38161),
+  ('whole-vibe','Blue','M',   '6a313e2e0b7754dd070f405e', 38175),
+  ('whole-vibe','Blue','L',   '6a313e2e0b7754dd070f405e', 38189),
+  ('whole-vibe','Blue','XL',  '6a313e2e0b7754dd070f405e', 38203),
+  ('whole-vibe','Blue','2XL', '6a313e2e0b7754dd070f405e', 38217),
+  ('whole-vibe','Pink','S',   '6a313e2e0b7754dd070f405e', 38224),
+  ('whole-vibe','Pink','M',   '6a313e2e0b7754dd070f405e', 38226),
+  ('whole-vibe','Pink','L',   '6a313e2e0b7754dd070f405e', 38228),
+  ('whole-vibe','Pink','XL',  '6a313e2e0b7754dd070f405e', 38230),
+  ('whole-vibe','Pink','2XL', '6a313e2e0b7754dd070f405e', 38232);
