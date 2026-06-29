@@ -52,26 +52,38 @@ UPDATE shirt_colors SET image_url = '/shirts/recovering-out-loud/gray.png' WHERE
 UPDATE shirt_colors SET image_url = '/shirts/recovering-out-loud/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovering-out-loud') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
 UPDATE shirt_colors SET image_url = '/shirts/recovering-out-loud/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovering-out-loud') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
 UPDATE shirt_colors SET image_url = '/shirts/recovering-out-loud/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovering-out-loud') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
--- worst-idea (4/6)
+-- worst-idea (6/6)
 UPDATE shirt_colors SET image_url = '/shirts/worst-idea/white.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'worst-idea') AND color_id = (SELECT id FROM colors WHERE name = 'White');
 UPDATE shirt_colors SET image_url = '/shirts/worst-idea/black.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'worst-idea') AND color_id = (SELECT id FROM colors WHERE name = 'Black');
+UPDATE shirt_colors SET image_url = '/shirts/worst-idea/gray.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'worst-idea') AND color_id = (SELECT id FROM colors WHERE name = 'Gray');
+UPDATE shirt_colors SET image_url = '/shirts/worst-idea/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'worst-idea') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
 UPDATE shirt_colors SET image_url = '/shirts/worst-idea/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'worst-idea') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
 UPDATE shirt_colors SET image_url = '/shirts/worst-idea/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'worst-idea') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
--- feel-deal-heal (4/6)
+-- feel-deal-heal (6/6)
 UPDATE shirt_colors SET image_url = '/shirts/feel-deal-heal/white.jpg' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'feel-deal-heal') AND color_id = (SELECT id FROM colors WHERE name = 'White');
 UPDATE shirt_colors SET image_url = '/shirts/feel-deal-heal/black.jpg' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'feel-deal-heal') AND color_id = (SELECT id FROM colors WHERE name = 'Black');
+UPDATE shirt_colors SET image_url = '/shirts/feel-deal-heal/gray.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'feel-deal-heal') AND color_id = (SELECT id FROM colors WHERE name = 'Gray');
 UPDATE shirt_colors SET image_url = '/shirts/feel-deal-heal/red.jpg' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'feel-deal-heal') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
+UPDATE shirt_colors SET image_url = '/shirts/feel-deal-heal/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'feel-deal-heal') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
 UPDATE shirt_colors SET image_url = '/shirts/feel-deal-heal/blue.jpg' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'feel-deal-heal') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
--- clean-and-serene-since (1/6)
+-- clean-and-serene-since (6/6)
+UPDATE shirt_colors SET image_url = '/shirts/clean-and-serene-since/white.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'clean-and-serene-since') AND color_id = (SELECT id FROM colors WHERE name = 'White');
+UPDATE shirt_colors SET image_url = '/shirts/clean-and-serene-since/black.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'clean-and-serene-since') AND color_id = (SELECT id FROM colors WHERE name = 'Black');
 UPDATE shirt_colors SET image_url = '/shirts/clean-and-serene-since/gray.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'clean-and-serene-since') AND color_id = (SELECT id FROM colors WHERE name = 'Gray');
--- recovery-est (4/6)
+UPDATE shirt_colors SET image_url = '/shirts/clean-and-serene-since/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'clean-and-serene-since') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
+UPDATE shirt_colors SET image_url = '/shirts/clean-and-serene-since/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'clean-and-serene-since') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
+UPDATE shirt_colors SET image_url = '/shirts/clean-and-serene-since/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'clean-and-serene-since') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
+-- recovery-est (6/6)
 UPDATE shirt_colors SET image_url = '/shirts/recovery-est/white.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovery-est') AND color_id = (SELECT id FROM colors WHERE name = 'White');
 UPDATE shirt_colors SET image_url = '/shirts/recovery-est/black.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovery-est') AND color_id = (SELECT id FROM colors WHERE name = 'Black');
 UPDATE shirt_colors SET image_url = '/shirts/recovery-est/gray.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovery-est') AND color_id = (SELECT id FROM colors WHERE name = 'Gray');
+UPDATE shirt_colors SET image_url = '/shirts/recovery-est/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovery-est') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
+UPDATE shirt_colors SET image_url = '/shirts/recovery-est/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovery-est') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
 UPDATE shirt_colors SET image_url = '/shirts/recovery-est/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'recovery-est') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
--- listenin (5/6)
+-- listenin (6/6)
 UPDATE shirt_colors SET image_url = '/shirts/listenin/white.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'White');
 UPDATE shirt_colors SET image_url = '/shirts/listenin/black.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Black');
 UPDATE shirt_colors SET image_url = '/shirts/listenin/gray.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Gray');
+UPDATE shirt_colors SET image_url = '/shirts/listenin/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
 UPDATE shirt_colors SET image_url = '/shirts/listenin/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
 UPDATE shirt_colors SET image_url = '/shirts/listenin/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
