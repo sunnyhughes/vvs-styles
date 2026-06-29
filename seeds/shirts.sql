@@ -5,7 +5,7 @@
 -- Re-runnable: wipes shirt_colors + shirts first so the seed is the source
 -- of truth. Apply seeds/shirt_options.sql AFTER this file.
 --
--- v1 launches with the 6 'live' shirts that have real Printify photos. The
+-- v1 launches with the 8 'live' shirts that have real Printify photos. The
 -- rest are stored as 'draft' so the catalog can grow without re-modeling —
 -- flip status to 'live' to surface a shirt on /shop.
 --
@@ -27,7 +27,7 @@ VALUES
   ('worst-idea',              'Worst Idea Tee',          2499, '/shirts/worst-idea/white.png',             'I Survived My Own Worst Idea',    'Recovery',   NULL, 'live',  'none'),
   ('whole-vibe',              'Whole Vibe Tee',          2499, '/shirts/whole-vibe/white.png',             'Cleantime Is a Whole Vibe',       'Recovery',   NULL, 'live',  'none'),
   ('feel-deal-heal',          'Feel Deal Heal Tee',      2499, '/shirts/feel-deal-heal/white.jpg',         'Feel, Deal & Heal',               'Healing',    NULL, 'live',  'none'),
-  ('clean-and-serene-since',  'Clean and Serene Tee',    2499, '/shirts/clean-and-serene-since/gray.png',  'Clean and Serene Since',          'Recovery',   NULL, 'live',  'year_clean'),
+  ('clean-and-serene-since',  'Clean and Serene Tee',    2499, '/shirts/clean-and-serene-since/white.png', 'Clean and Serene Since',          'Recovery',   NULL, 'live',  'year_clean'),
 
   -- ── drafts (hidden from /shop until flipped to 'live') ──────────────
   -- past-future: hidden until real product photos exist (had only a concept photo).
@@ -51,6 +51,8 @@ VALUES
   ('power-of-we',                 'Power of WE Tee',              2499, '/placeholder-shirt.svg', 'Power of the "WE"',                   'Recovery', NULL, 'draft', 'none'),
   ('principles-before-personality','Principles Before Personality Tee', 2499, '/placeholder-shirt.svg', 'Principles Before Personality or Prestige', 'Recovery', NULL, 'draft', 'none'),
 
-  -- ── drafts WITH real photos (ready to flip 'live' after review) ─────
-  ('recovery-est',                'Recovery Est. Tee',            2499, '/shirts/recovery-est/white.png', 'Recovery Est.',                  'Recovery', NULL, 'draft', 'year_clean'),
-  ('listenin',                    'Good E.S.H. Tee',              2499, '/shirts/listenin/white.png',     'I''m Here for the Good E.S.H.',  'Recovery', NULL, 'draft', 'none');
+  -- ── live: drafts with real photos, reviewed + flipped on 2026-06-29 ─────
+  -- recovery-est is personalized (year_clean) → manual fulfillment, no variants.
+  -- listenin is plain with a 5-color variant map (no red on its product).
+  ('recovery-est',                'Recovery Est. Tee',            2499, '/shirts/recovery-est/white.png', 'Recovery Est.',                  'Recovery', NULL, 'live', 'year_clean'),
+  ('listenin',                    'Good E.S.H. Tee',              2499, '/shirts/listenin/white.png',     'I''m Here for the Good E.S.H.',  'Recovery', NULL, 'live', 'none');

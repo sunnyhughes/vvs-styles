@@ -20,8 +20,8 @@
 -- manual — each needs a unique print file (the buyer's clean-date) — so no rows.
 --
 -- Printify's color titles differ from our six basics, so we translate per shirt;
--- for listenin: Royal -> Blue, Ice Grey -> Gray, Heather Heliconia -> Pink
--- (White/Black map 1:1). The blueprint also offers XS/3XL/4XL/5XL and dozens of
+-- for listenin: Royal -> Blue, Ice Grey -> Gray, Heather Heliconia -> Pink,
+-- solid Red -> Red (White/Black map 1:1). The blueprint offers XS/3XL/4XL/5XL and dozens of
 -- colors we don't sell — all dropped.
 
 DELETE FROM shirt_variants;
@@ -53,6 +53,11 @@ INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printi
   ('listenin','Pink','L',   '6a29534b33921016810a2e6d', 105259),
   ('listenin','Pink','XL',  '6a29534b33921016810a2e6d', 105260),
   ('listenin','Pink','2XL', '6a29534b33921016810a2e6d', 105261),
+  ('listenin','Red','S',    '6a29534b33921016810a2e6d', 38160),  -- Red (enabled later)
+  ('listenin','Red','M',    '6a29534b33921016810a2e6d', 38174),  -- Red (enabled later)
+  ('listenin','Red','L',    '6a29534b33921016810a2e6d', 38188),  -- Red (enabled later)
+  ('listenin','Red','XL',   '6a29534b33921016810a2e6d', 38202),  -- Red (enabled later)
+  ('listenin','Red','2XL',  '6a29534b33921016810a2e6d', 38216),  -- Red (enabled later)
   -- worst-idea — "I Survived My Own Worst Idea" (Printify product 6a3e6b452e847d86d80e1713)
   -- this blueprint's pink is "Azalea" (not Heliconia); all 6 colors enabled.
   ('worst-idea','White','S',  '6a3e6b452e847d86d80e1713', 12102),
@@ -119,8 +124,10 @@ INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printi
   ('still-here','Red','XL',   '6a2b345560b8e9be09099f40', 11935),
   ('still-here','Red','2XL',  '6a2b345560b8e9be09099f40', 11936),
   -- feel-deal-heal — "Feel Deal Heal" (Printify product 6a3146490b7754dd070f4a08)
-  -- Only 4 of our colors enabled (no Gray/Pink on this product). This blueprint's
-  -- red = Cardinal Red, blue = Carolina Blue.
+  -- All 6 of our colors enabled. This blueprint's red = Cardinal Red,
+  -- blue = Carolina Blue, gray = Ash, pink = Light Pink. (Ash/Light Pink were
+  -- enabled here later; worst-idea/still-here use Ice Grey + Azalea instead, so
+  -- gray/pink look slightly different between shirts — cosmetic, see backlog.)
   ('feel-deal-heal','White','S',  '6a3146490b7754dd070f4a08', 12102),
   ('feel-deal-heal','White','M',  '6a3146490b7754dd070f4a08', 12101),
   ('feel-deal-heal','White','L',  '6a3146490b7754dd070f4a08', 12100),
@@ -141,8 +148,19 @@ INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printi
   ('feel-deal-heal','Blue','L',   '6a3146490b7754dd070f4a08', 11866),
   ('feel-deal-heal','Blue','XL',  '6a3146490b7754dd070f4a08', 11869),
   ('feel-deal-heal','Blue','2XL', '6a3146490b7754dd070f4a08', 11870),
+  ('feel-deal-heal','Gray','S',   '6a3146490b7754dd070f4a08', 11850),  -- Ash
+  ('feel-deal-heal','Gray','M',   '6a3146490b7754dd070f4a08', 11849),  -- Ash
+  ('feel-deal-heal','Gray','L',   '6a3146490b7754dd070f4a08', 11848),  -- Ash
+  ('feel-deal-heal','Gray','XL',  '6a3146490b7754dd070f4a08', 11851),  -- Ash
+  ('feel-deal-heal','Gray','2XL', '6a3146490b7754dd070f4a08', 11852),  -- Ash
+  ('feel-deal-heal','Pink','S',   '6a3146490b7754dd070f4a08', 11964),  -- Light Pink
+  ('feel-deal-heal','Pink','M',   '6a3146490b7754dd070f4a08', 11963),  -- Light Pink
+  ('feel-deal-heal','Pink','L',   '6a3146490b7754dd070f4a08', 11962),  -- Light Pink
+  ('feel-deal-heal','Pink','XL',  '6a3146490b7754dd070f4a08', 11965),  -- Light Pink
+  ('feel-deal-heal','Pink','2XL', '6a3146490b7754dd070f4a08', 11966),  -- Light Pink
   -- whole-vibe — "Cleantime is a whole VIBE" (Printify product 6a313e2e0b7754dd070f405e)
-  -- 5 colors enabled (no Gray yet). Blue = Royal, Pink = Azalea, Red = solid Red.
+  -- All 6 colors enabled. Blue = Royal, Pink = Azalea, Red = solid Red,
+  -- gray = Sport Grey (Ice Grey stays disabled here).
   ('whole-vibe','White','S',  '6a313e2e0b7754dd070f405e', 38163),
   ('whole-vibe','White','M',  '6a313e2e0b7754dd070f405e', 38177),
   ('whole-vibe','White','L',  '6a313e2e0b7754dd070f405e', 38191),
@@ -167,4 +185,9 @@ INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printi
   ('whole-vibe','Pink','M',   '6a313e2e0b7754dd070f405e', 38226),
   ('whole-vibe','Pink','L',   '6a313e2e0b7754dd070f405e', 38228),
   ('whole-vibe','Pink','XL',  '6a313e2e0b7754dd070f405e', 38230),
-  ('whole-vibe','Pink','2XL', '6a313e2e0b7754dd070f405e', 38232);
+  ('whole-vibe','Pink','2XL', '6a313e2e0b7754dd070f405e', 38232),
+  ('whole-vibe','Gray','S',   '6a313e2e0b7754dd070f405e', 38162),  -- Sport Grey
+  ('whole-vibe','Gray','M',   '6a313e2e0b7754dd070f405e', 38176),  -- Sport Grey
+  ('whole-vibe','Gray','L',   '6a313e2e0b7754dd070f405e', 38190),  -- Sport Grey
+  ('whole-vibe','Gray','XL',  '6a313e2e0b7754dd070f405e', 38204),  -- Sport Grey
+  ('whole-vibe','Gray','2XL', '6a313e2e0b7754dd070f405e', 38218);  -- Sport Grey
