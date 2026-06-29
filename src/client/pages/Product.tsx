@@ -1,5 +1,6 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import type { Color, ShirtDetail } from "../../shared/types";
 import { AddToCartButton } from "../components/AddToCartButton";
 import { CleanTimeInput } from "../components/CleanTimeInput";
@@ -84,7 +85,18 @@ export function Product() {
     : null;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 lg:grid lg:grid-cols-2 lg:gap-10">
+    <>
+      <div className="mx-auto max-w-6xl px-4 pt-6">
+        <Link
+          to="/shop"
+          className="inline-flex items-center gap-1.5 rounded-md font-sans text-sm text-stone-700 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800 focus-visible:ring-offset-2"
+        >
+          <ArrowLeftIcon className="h-4 w-4" aria-hidden="true" />
+          Back to shop
+        </Link>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-4 py-10 lg:grid lg:grid-cols-2 lg:gap-10">
       <div className="lg:sticky lg:top-24 lg:self-start">
         <ShirtPreview
           imageUrl={colorImage}
@@ -121,6 +133,7 @@ export function Product() {
           <AddToCartButton item={item} disabled={!item} />
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

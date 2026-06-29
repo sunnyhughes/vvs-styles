@@ -15,7 +15,8 @@ export function Hero() {
           </h1>
           <p className="mt-4 font-sans text-lg text-stone-700">
             Milestone tees in your program&rsquo;s language. Pick your colors,
-            add your cleantime, and wear your pride out loud — shirts from $28.
+            add your cleantime, and wear your pride out loud — shirts from
+            $24.99.
           </p>
           <Link
             to="/shop"
@@ -25,18 +26,13 @@ export function Hero() {
           </Link>
         </div>
 
-        {/* TODO: replace with a real faceless lifestyle photo of someone
-            wearing a shirt with a strong insider phrase (DESIGN §2 + §7 —
-            hero photography is a hard launch dependency). */}
-        <div className="flex aspect-[4/5] items-center justify-center rounded-md border border-stone-200 bg-stone-100 p-8 shadow-sm">
-          <p className="text-center">
-            <span className="font-display text-3xl text-emerald-800">
-              &ldquo;Still Here, Still Clean&rdquo;
-            </span>
-            <span className="mt-2 block font-sans text-sm text-stone-500">
-              photo placeholder
-            </span>
-          </p>
+        <div className="overflow-hidden rounded-md border border-stone-200 bg-stone-100 shadow-sm">
+          <img
+            src="/shirts/still-here-still-clean-red-lifestyle.png"
+            alt="A smiling woman wearing the red Still Here, Still Clean recovery tee"
+            className="aspect-[4/5] w-full object-cover object-top"
+            loading="eager"
+          />
         </div>
       </div>
     </section>

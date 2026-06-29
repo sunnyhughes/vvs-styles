@@ -6,8 +6,9 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { Nav } from "../../src/client/components/Nav";
+import { addToCart, clearCart } from "../../src/client/lib/cart";
 
 function renderNav() {
   return render(
@@ -18,6 +19,33 @@ function renderNav() {
 }
 
 describe("Nav", () => {
+  beforeEach(() => {
+    clearCart();
+  });
+
+  it("shows no cart count badge when the cart is empty", () => {
+    renderNav();
+    const cartLink = screen.getByRole("link", { name: /^cart$/i });
+    expect(cartLink).toHaveTextContent("");
+  });
+
+  it("shows the item count and announces it once items are added", () => {
+    addToCart({
+      slug: "still-here",
+      name: "Still Here Tee",
+      unitPriceCents: 2499,
+      imageUrl: "/shirts/still-here/white.png",
+      color: "White",
+      colorHex: "#FFFFFF",
+      size: "M",
+      cleantimeMode: "none",
+      cleantimeValue: 0,
+      qty: 2,
+    });
+    renderNav();
+    const cartLink = screen.getByRole("link", { name: /cart, 2 items/i });
+    expect(cartLink).toHaveTextContent("2");
+  });
   it("opens the mobile drawer when the hamburger is clicked", async () => {
     const user = userEvent.setup();
     renderNav();

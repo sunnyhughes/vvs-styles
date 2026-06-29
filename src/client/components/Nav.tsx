@@ -1,6 +1,7 @@
 import { Bars3Icon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { cartCount, useCart } from "../lib/cart";
 import { MobileNavDrawer } from "./MobileNavDrawer";
 
 const desktopLinks = [
@@ -15,6 +16,8 @@ const iconButtonClass =
 /** Fixed top navigation bar: inline links on desktop, hamburger on mobile. */
 export function Nav() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const count = cartCount(useCart());
+  const cartLabel = count > 0 ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart";
 
   return (
     <header className="sticky top-0 z-40 border-b border-stone-200 bg-stone-50">
@@ -46,8 +49,20 @@ export function Nav() {
             ))}
           </div>
 
-          <Link to="/cart" aria-label="Cart" className={iconButtonClass}>
+          <Link
+            to="/cart"
+            aria-label={cartLabel}
+            className={`relative ${iconButtonClass}`}
+          >
             <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
+            {count > 0 && (
+              <span
+                aria-hidden="true"
+                className="absolute -right-0.5 -top-0.5 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-emerald-800 px-1 font-sans text-xs font-semibold leading-none text-white"
+              >
+                {count > 99 ? "99+" : count}
+              </span>
+            )}
           </Link>
 
           <button
