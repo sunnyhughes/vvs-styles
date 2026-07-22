@@ -3,11 +3,19 @@ main = "src/worker/index.ts"
 compatibility_date = "2026-05-13"
 account_id = "68ac97ce8c0b4e8a007aa81433a1e264"
 
+# Keep the *.workers.dev URL live. Adding `routes` below makes Wrangler assume
+# we manage routing ourselves and it DISABLES the workers.dev URL unless this is
+# explicitly true. (Learned the hard way: the first deploy with the routes below
+# 404'd the whole site on workers.dev.)
+workers_dev = true
+
 # Custom domains. Cloudflare creates the DNS records and issues the certificate
-# on `wrangler deploy` — no dashboard steps needed, as long as the zone is
-# already on this account. Custom domains match the hostname EXACTLY, so the
-# apex does not cover `www`; both are listed. The workers.dev URL keeps working
-# alongside these.
+# on `wrangler deploy` — BUT only if the hostname has no conflicting DNS records
+# already. If vv-styles.com / www already have A/CNAME records, the attach fails
+# with API error 100117 ("externally managed DNS records") — delete those
+# records in the Cloudflare DNS dashboard first (keep MX/TXT for email), then
+# redeploy. Custom domains match the hostname EXACTLY, so the apex does not
+# cover `www`; both are listed.
 [[routes]]
 pattern = "vv-styles.com"
 custom_domain = true
