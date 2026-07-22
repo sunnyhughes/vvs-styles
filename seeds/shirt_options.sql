@@ -87,3 +87,17 @@ UPDATE shirt_colors SET image_url = '/shirts/listenin/gray.png' WHERE shirt_id =
 UPDATE shirt_colors SET image_url = '/shirts/listenin/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
 UPDATE shirt_colors SET image_url = '/shirts/listenin/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
 UPDATE shirt_colors SET image_url = '/shirts/listenin/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'listenin') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
+-- proud-recovering (6/6)
+UPDATE shirt_colors SET image_url = '/shirts/proud-recovering/white.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'proud-recovering') AND color_id = (SELECT id FROM colors WHERE name = 'White');
+UPDATE shirt_colors SET image_url = '/shirts/proud-recovering/black.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'proud-recovering') AND color_id = (SELECT id FROM colors WHERE name = 'Black');
+UPDATE shirt_colors SET image_url = '/shirts/proud-recovering/gray.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'proud-recovering') AND color_id = (SELECT id FROM colors WHERE name = 'Gray');
+UPDATE shirt_colors SET image_url = '/shirts/proud-recovering/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'proud-recovering') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
+UPDATE shirt_colors SET image_url = '/shirts/proud-recovering/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'proud-recovering') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
+UPDATE shirt_colors SET image_url = '/shirts/proud-recovering/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'proud-recovering') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');
+-- past-future (6/6)
+UPDATE shirt_colors SET image_url = '/shirts/past-future/white.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'past-future') AND color_id = (SELECT id FROM colors WHERE name = 'White');
+UPDATE shirt_colors SET image_url = '/shirts/past-future/black.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'past-future') AND color_id = (SELECT id FROM colors WHERE name = 'Black');
+UPDATE shirt_colors SET image_url = '/shirts/past-future/gray.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'past-future') AND color_id = (SELECT id FROM colors WHERE name = 'Gray');
+UPDATE shirt_colors SET image_url = '/shirts/past-future/red.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'past-future') AND color_id = (SELECT id FROM colors WHERE name = 'Red');
+UPDATE shirt_colors SET image_url = '/shirts/past-future/pink.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'past-future') AND color_id = (SELECT id FROM colors WHERE name = 'Pink');
+UPDATE shirt_colors SET image_url = '/shirts/past-future/blue.png' WHERE shirt_id = (SELECT id FROM shirts WHERE slug = 'past-future') AND color_id = (SELECT id FROM colors WHERE name = 'Blue');

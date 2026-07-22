@@ -30,8 +30,6 @@ VALUES
   ('clean-and-serene-since',  'Clean and Serene Tee',    2499, '/shirts/clean-and-serene-since/white.png', 'Clean and Serene Since',          'Recovery',   NULL, 'live',  'year_clean'),
 
   -- ── drafts (hidden from /shop until flipped to 'live') ──────────────
-  -- past-future: hidden until real product photos exist (had only a concept photo).
-  ('past-future',             'Past Tee',                2499, '/placeholder-shirt.svg', 'Past Does NOT Dictate Future',    'Motivation', NULL, 'draft', 'none'),
   ('lies-dies-flies',             'Lies Dies Flies Tee',          2499, '/placeholder-shirt.svg', 'No Matter Who Lies, Dies, or Flies',  'Recovery', NULL, 'draft', 'none'),
   ('dont-share-just-listen',      'Just Listen Tee',              2499, '/placeholder-shirt.svg', 'Don''t Share, Just Listen',           'Recovery', NULL, 'draft', 'none'),
   ('kiss',                        'K.I.S.S. Tee',                 2499, '/placeholder-shirt.svg', 'K.I.S.S.',                            'Recovery', NULL, 'draft', 'none'),
@@ -55,4 +53,14 @@ VALUES
   -- recovery-est is personalized (year_clean) → manual fulfillment, no variants.
   -- listenin is plain with a 5-color variant map (no red on its product).
   ('recovery-est',                'Recovery Est. Tee',            2499, '/shirts/recovery-est/white.png', 'Recovery Est.',                  'Recovery', NULL, 'live', 'year_clean'),
-  ('listenin',                    'Good E.S.H. Tee',              2499, '/shirts/listenin/white.png',     'I''m Here for the Good E.S.H.',  'Recovery', NULL, 'live', 'none');
+  ('listenin',                    'Good E.S.H. Tee',              2499, '/shirts/listenin/white.png',     'I''m Here for the Good E.S.H.',  'Recovery', NULL, 'live', 'none'),
+
+  -- ── live: the origin phrase, added 2026-07-21 (phoenix graphic, 6/6 photos) ─
+  -- Plain shirt (none) → auto-fulfillable with a full 6-color variant map.
+  ('proud-recovering',            'Proud Tee',                    2499, '/shirts/proud-recovering/white.png', 'Proud to Be Recovering',     'Recovery', NULL, 'live', 'none'),
+
+  -- ── live: added 2026-07-21 (trauma→healing road graphic, 6/6 photos) ────────
+  -- Plain shirt (none). NO variant map yet → routes to manual founder
+  -- fulfillment until scripts/printify-variants.mjs is run for it and rows are
+  -- added to seeds/shirt_variants.sql.
+  ('past-future',                 'Past Tee',                     2499, '/shirts/past-future/white.png',      'Past Does NOT Dictate Future','Motivation', NULL, 'live', 'none');

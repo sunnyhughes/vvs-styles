@@ -190,4 +190,74 @@ INSERT INTO shirt_variants (shirt_slug, color, size, printify_product_id, printi
   ('whole-vibe','Gray','M',   '6a313e2e0b7754dd070f405e', 38176),  -- Sport Grey
   ('whole-vibe','Gray','L',   '6a313e2e0b7754dd070f405e', 38190),  -- Sport Grey
   ('whole-vibe','Gray','XL',  '6a313e2e0b7754dd070f405e', 38204),  -- Sport Grey
-  ('whole-vibe','Gray','2XL', '6a313e2e0b7754dd070f405e', 38218);  -- Sport Grey
+  ('whole-vibe','Gray','2XL', '6a313e2e0b7754dd070f405e', 38218),  -- Sport Grey
+  -- proud-recovering — "Proud to Be Recovering" Phoenix (Printify product 6a5fd48a554f7de18e0e7bec)
+  -- Same Gildan Softstyle blueprint as whole-vibe/listenin. Blue = Royal,
+  -- Pink = Azalea, Red = solid Red. GRAY = Dark Heather: this product has
+  -- Sport Grey + Ice Grey DISABLED, so Dark Heather (darker/heathered) is the
+  -- only enabled gray — enable Sport Grey in Printify + re-run if a lighter gray
+  -- is wanted. All 6 colors x 5 sizes enabled.
+  ('proud-recovering','White','S',  '6a5fd48a554f7de18e0e7bec', 38163),
+  ('proud-recovering','White','M',  '6a5fd48a554f7de18e0e7bec', 38177),
+  ('proud-recovering','White','L',  '6a5fd48a554f7de18e0e7bec', 38191),
+  ('proud-recovering','White','XL', '6a5fd48a554f7de18e0e7bec', 38205),
+  ('proud-recovering','White','2XL','6a5fd48a554f7de18e0e7bec', 38219),
+  ('proud-recovering','Black','S',  '6a5fd48a554f7de18e0e7bec', 38164),
+  ('proud-recovering','Black','M',  '6a5fd48a554f7de18e0e7bec', 38178),
+  ('proud-recovering','Black','L',  '6a5fd48a554f7de18e0e7bec', 38192),
+  ('proud-recovering','Black','XL', '6a5fd48a554f7de18e0e7bec', 38206),
+  ('proud-recovering','Black','2XL','6a5fd48a554f7de18e0e7bec', 38220),
+  ('proud-recovering','Red','S',    '6a5fd48a554f7de18e0e7bec', 38160),
+  ('proud-recovering','Red','M',    '6a5fd48a554f7de18e0e7bec', 38174),
+  ('proud-recovering','Red','L',    '6a5fd48a554f7de18e0e7bec', 38188),
+  ('proud-recovering','Red','XL',   '6a5fd48a554f7de18e0e7bec', 38202),
+  ('proud-recovering','Red','2XL',  '6a5fd48a554f7de18e0e7bec', 38216),
+  ('proud-recovering','Blue','S',   '6a5fd48a554f7de18e0e7bec', 38161),  -- Royal
+  ('proud-recovering','Blue','M',   '6a5fd48a554f7de18e0e7bec', 38175),  -- Royal
+  ('proud-recovering','Blue','L',   '6a5fd48a554f7de18e0e7bec', 38189),  -- Royal
+  ('proud-recovering','Blue','XL',  '6a5fd48a554f7de18e0e7bec', 38203),  -- Royal
+  ('proud-recovering','Blue','2XL', '6a5fd48a554f7de18e0e7bec', 38217),  -- Royal
+  ('proud-recovering','Pink','S',   '6a5fd48a554f7de18e0e7bec', 38224),  -- Azalea
+  ('proud-recovering','Pink','M',   '6a5fd48a554f7de18e0e7bec', 38226),  -- Azalea
+  ('proud-recovering','Pink','L',   '6a5fd48a554f7de18e0e7bec', 38228),  -- Azalea
+  ('proud-recovering','Pink','XL',  '6a5fd48a554f7de18e0e7bec', 38230),  -- Azalea
+  ('proud-recovering','Pink','2XL', '6a5fd48a554f7de18e0e7bec', 38232),  -- Azalea
+  ('proud-recovering','Gray','S',   '6a5fd48a554f7de18e0e7bec', 63290),  -- Dark Heather
+  ('proud-recovering','Gray','M',   '6a5fd48a554f7de18e0e7bec', 63295),  -- Dark Heather
+  ('proud-recovering','Gray','L',   '6a5fd48a554f7de18e0e7bec', 63300),  -- Dark Heather
+  ('proud-recovering','Gray','XL',  '6a5fd48a554f7de18e0e7bec', 63305),  -- Dark Heather
+  ('proud-recovering','Gray','2XL', '6a5fd48a554f7de18e0e7bec', 63310),  -- Dark Heather
+  -- past-future — "Past does not dictate Future" Minimalist (Printify product 6a52bcb9aeb508bd5c005bda)
+  -- Same Gildan Heavy Cotton blueprint as worst-idea/still-here (12xxx ids).
+  -- Blue = Royal, Pink = Azalea, Red = solid Red, Gray = Sport Grey (enabled
+  -- here, so a true light gray). All 6 colors x 5 sizes enabled.
+  ('past-future','White','S',  '6a52bcb9aeb508bd5c005bda', 12102),
+  ('past-future','White','M',  '6a52bcb9aeb508bd5c005bda', 12101),
+  ('past-future','White','L',  '6a52bcb9aeb508bd5c005bda', 12100),
+  ('past-future','White','XL', '6a52bcb9aeb508bd5c005bda', 12103),
+  ('past-future','White','2XL','6a52bcb9aeb508bd5c005bda', 12104),
+  ('past-future','Black','S',  '6a52bcb9aeb508bd5c005bda', 12126),
+  ('past-future','Black','M',  '6a52bcb9aeb508bd5c005bda', 12125),
+  ('past-future','Black','L',  '6a52bcb9aeb508bd5c005bda', 12124),
+  ('past-future','Black','XL', '6a52bcb9aeb508bd5c005bda', 12127),
+  ('past-future','Black','2XL','6a52bcb9aeb508bd5c005bda', 12128),
+  ('past-future','Red','S',    '6a52bcb9aeb508bd5c005bda', 12024),
+  ('past-future','Red','M',    '6a52bcb9aeb508bd5c005bda', 12023),
+  ('past-future','Red','L',    '6a52bcb9aeb508bd5c005bda', 12022),
+  ('past-future','Red','XL',   '6a52bcb9aeb508bd5c005bda', 12025),
+  ('past-future','Red','2XL',  '6a52bcb9aeb508bd5c005bda', 12026),
+  ('past-future','Blue','S',   '6a52bcb9aeb508bd5c005bda', 12030),  -- Royal
+  ('past-future','Blue','M',   '6a52bcb9aeb508bd5c005bda', 12029),  -- Royal
+  ('past-future','Blue','L',   '6a52bcb9aeb508bd5c005bda', 12028),  -- Royal
+  ('past-future','Blue','XL',  '6a52bcb9aeb508bd5c005bda', 12031),  -- Royal
+  ('past-future','Blue','2XL', '6a52bcb9aeb508bd5c005bda', 12032),  -- Royal
+  ('past-future','Pink','S',   '6a52bcb9aeb508bd5c005bda', 12120),  -- Azalea
+  ('past-future','Pink','M',   '6a52bcb9aeb508bd5c005bda', 12119),  -- Azalea
+  ('past-future','Pink','L',   '6a52bcb9aeb508bd5c005bda', 12118),  -- Azalea
+  ('past-future','Pink','XL',  '6a52bcb9aeb508bd5c005bda', 12121),  -- Azalea
+  ('past-future','Pink','2XL', '6a52bcb9aeb508bd5c005bda', 12122),  -- Azalea
+  ('past-future','Gray','S',   '6a52bcb9aeb508bd5c005bda', 12072),  -- Sport Grey
+  ('past-future','Gray','M',   '6a52bcb9aeb508bd5c005bda', 12071),  -- Sport Grey
+  ('past-future','Gray','L',   '6a52bcb9aeb508bd5c005bda', 12070),  -- Sport Grey
+  ('past-future','Gray','XL',  '6a52bcb9aeb508bd5c005bda', 12073),  -- Sport Grey
+  ('past-future','Gray','2XL', '6a52bcb9aeb508bd5c005bda', 12074);  -- Sport Grey
