@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
+import { socialLinks } from "../content/social";
 
 const linkClass =
   "rounded-md font-sans text-sm text-stone-700 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800 focus-visible:ring-offset-2";
+
+const socialClass =
+  "rounded-full p-1 text-stone-500 hover:text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800 focus-visible:ring-offset-2";
 
 /** Site-wide footer, shared across every route. */
 export function Footer() {
   return (
     <footer className="border-t border-stone-200 bg-stone-50">
       <div className="mx-auto max-w-6xl px-4 py-10">
-        <p className="font-display text-xl text-emerald-800">vvs-styles</p>
+        <p className="font-display text-xl text-emerald-800">vv-styles</p>
         <p className="mt-1 font-sans text-sm text-stone-500">
           Made in recovery, for people in recovery.
         </p>
@@ -26,8 +30,33 @@ export function Footer() {
             FAQ
           </Link>
         </nav>
+
+        <nav className="mt-6 flex gap-2" aria-label="Social media">
+          {socialLinks.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={social.label}
+              className={socialClass}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d={social.path} />
+              </svg>
+            </a>
+          ))}
+        </nav>
+
         <p className="mt-8 font-sans text-xs text-stone-500">
-          &copy; 2026 vvs-styles. All rights reserved.
+          &copy; 2026 vv-styles, a venture of Esoh Creations LLC. All rights
+          reserved.
         </p>
       </div>
     </footer>

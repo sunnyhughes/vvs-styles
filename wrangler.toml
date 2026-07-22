@@ -3,6 +3,19 @@ main = "src/worker/index.ts"
 compatibility_date = "2026-05-13"
 account_id = "68ac97ce8c0b4e8a007aa81433a1e264"
 
+# Custom domains. Cloudflare creates the DNS records and issues the certificate
+# on `wrangler deploy` — no dashboard steps needed, as long as the zone is
+# already on this account. Custom domains match the hostname EXACTLY, so the
+# apex does not cover `www`; both are listed. The workers.dev URL keeps working
+# alongside these.
+[[routes]]
+pattern = "vv-styles.com"
+custom_domain = true
+
+[[routes]]
+pattern = "www.vv-styles.com"
+custom_domain = true
+
 [assets]
 not_found_handling = "single-page-application"
 run_worker_first = ["/api/*"]

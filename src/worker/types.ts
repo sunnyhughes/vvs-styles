@@ -13,7 +13,7 @@ export interface Env {
   // misconfigured environment.
   /** Resend API key — set via `wrangler secret put RESEND_API_KEY`. */
   RESEND_API_KEY?: string;
-  /** Verified "from" address for customer + founder email, e.g. orders@vvsstyles.com. [vars] */
+  /** Verified "from" address for customer + founder email, e.g. orders@vv-styles.com. [vars] */
   EMAIL_FROM?: string;
   /** Where founder/manual-fulfillment alerts go. [vars] */
   FOUNDER_EMAIL?: string;

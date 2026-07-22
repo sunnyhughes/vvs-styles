@@ -3,8 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CartDrawer } from "./components/CartDrawer";
 import { Footer } from "./components/Footer";
 import { Nav } from "./components/Nav";
+import { About } from "./pages/About";
 import { Cart } from "./pages/Cart";
 import { Checkout } from "./pages/Checkout";
+import { FAQ } from "./pages/FAQ";
 import { Landing } from "./pages/Landing";
 import { OrderConfirmation } from "./pages/OrderConfirmation";
 import { Product } from "./pages/Product";
@@ -22,7 +24,7 @@ function Layout({ children }: { children: ReactNode }) {
   );
 }
 
-/** Placeholder for routes built in later phases (checkout, about, FAQ). */
+/** 404 fallback for any unmatched route. */
 function ComingSoon() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-20 text-center">
@@ -42,6 +44,8 @@ export function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:slug" element={<Product />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route

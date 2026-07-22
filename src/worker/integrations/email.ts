@@ -105,7 +105,7 @@ export function buildCustomerEmail(data: OrderEmailData): {
 } {
   const ref = shortRef(data.orderId);
   return {
-    subject: `Your VVS Styles order ${ref} is confirmed`,
+    subject: `Your vv-styles order ${ref} is confirmed`,
     html: `<div style="font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;color:#1c1917;">
       <h1 style="color:#065f46;font-size:22px;">Thank you, ${data.shippingName.split(" ")[0]} 💚</h1>
       <p>Your order <strong>${ref}</strong> is confirmed and headed to print. Every shirt is made to order, so expect it to ship in about <strong>5–7 business days</strong>, with delivery a few days after that.</p>
@@ -116,7 +116,7 @@ export function buildCustomerEmail(data: OrderEmailData): {
       </table>
       <p style="color:#57534e;font-size:13px;">Shipping to:<br>${data.shippingAddress.replace(/\n/g, "<br>")}</p>
       <p>Questions about your order? Just reply to this email.</p>
-      <p style="color:#065f46;">Keep coming back. — VVS Styles</p>
+      <p style="color:#065f46;">Keep coming back. — vv-styles</p>
     </div>`,
   };
 }

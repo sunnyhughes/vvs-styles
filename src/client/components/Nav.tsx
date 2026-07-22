@@ -29,7 +29,7 @@ export function Nav() {
           to="/"
           className="rounded-md font-display text-2xl text-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800 focus-visible:ring-offset-2"
         >
-          vvs-styles
+          vv-styles
         </Link>
 
         <div className="flex items-center gap-1 md:gap-2">
