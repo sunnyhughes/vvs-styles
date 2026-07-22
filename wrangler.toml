@@ -41,7 +41,7 @@ database_id = "1ebb4f68-24c1-4052-b4a8-4d40157de8d8"
 # secret key (`sk_...`) is NOT here; it lives in `.dev.vars` locally and is
 # set via `wrangler secret put STRIPE_SECRET_KEY` in production.
 [vars]
-STRIPE_PUBLISHABLE_KEY = "pk_test_51TY6KYAZyNYHbgj17x8szFMHPvJ2OXoPwVle9Jm9WE1Nc6oAj0OfT7eTh1c5uud7YgVbHUxn026BHuvcm9ma6OoJ008sYoQBKm"
+STRIPE_PUBLISHABLE_KEY = "pk_live_51TY6KYAZyNYHbgj16EZEg9tSh4v0SHj9jtZZrRwzC3tzqNReAn7GsvYUh16CjYlJ1QtSsx5vmtGICkdiRXIByKn7001qKkyv8x"
 
 # Phase 4 fulfillment config (non-secret). The matching secrets —
 # RESEND_API_KEY and PRINTIFY_API_TOKEN — go via `wrangler secret put`, not
