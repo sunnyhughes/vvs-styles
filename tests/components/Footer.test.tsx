@@ -18,6 +18,12 @@ describe("Footer", () => {
     expect(screen.getByText(/Esoh Creations LLC/)).toBeInTheDocument();
   });
 
+  it("shows the vv-styles brand logo", () => {
+    renderFooter();
+    const logo = screen.getByRole("img", { name: "vv-styles" });
+    expect(logo).toHaveAttribute("src", "/vvstyles-logo3.png");
+  });
+
   it.each(socialLinks)("links to $label", ({ label, href }) => {
     renderFooter();
     const link = screen.getByRole("link", { name: label });

@@ -12,7 +12,13 @@ export function Footer() {
   return (
     <footer className="border-t border-stone-200 bg-stone-50">
       <div className="mx-auto max-w-6xl px-4 py-10">
-        <p className="font-display text-xl text-emerald-800">vv-styles</p>
+        <img
+          src="/vvstyles-logo3.png"
+          alt="vv-styles"
+          className="h-16 w-auto"
+          width={1050}
+          height={600}
+        />
         <p className="mt-1 font-sans text-sm text-stone-500">
           Made in recovery, for people in recovery.
         </p>
@@ -54,10 +60,21 @@ export function Footer() {
           ))}
         </nav>
 
-        <p className="mt-8 font-sans text-xs text-stone-500">
-          &copy; 2026 vv-styles, a venture of Esoh Creations LLC. All rights
-          reserved.
-        </p>
+        <div className="mt-8 flex items-center gap-3">
+          {/* Decorative — the text beside it already names Esoh Creations. */}
+          <img
+            src="/esoh-logo.png"
+            alt=""
+            aria-hidden="true"
+            className="h-10 w-auto"
+            width={500}
+            height={500}
+          />
+          <p className="font-sans text-xs text-stone-500">
+            &copy; 2026 vv-styles, a venture of Esoh Creations LLC. All rights
+            reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );
