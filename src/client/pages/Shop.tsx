@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ShirtCard } from "../components/ShirtCard";
+import { promo } from "../content/promo";
 import { getShirts } from "../lib/api";
 import type { Shirt } from "../../shared/types";
 
@@ -33,6 +34,10 @@ export function Shop() {
       </h1>
       <p className="mt-2 font-sans text-base text-stone-700">
         Milestone tees in your program&rsquo;s language.
+      </p>
+      <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 font-sans text-sm font-medium text-emerald-800">
+        <span aria-hidden="true">✨</span>
+        {promo.shopNote}
       </p>
 
       {state.status === "loading" && (

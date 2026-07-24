@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CartDrawer } from "./components/CartDrawer";
 import { Footer } from "./components/Footer";
 import { Nav } from "./components/Nav";
+import { PromoBanner } from "./components/PromoBanner";
 import { About } from "./pages/About";
 import { Cart } from "./pages/Cart";
 import { Checkout } from "./pages/Checkout";
@@ -16,6 +17,7 @@ import { Shop } from "./pages/Shop";
 function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-stone-50">
+      <PromoBanner />
       <Nav />
       <main className="flex-1">{children}</main>
       <Footer />
