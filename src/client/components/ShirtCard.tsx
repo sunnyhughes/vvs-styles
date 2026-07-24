@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import type { Shirt } from "../../shared/types";
+import type { ShirtSummary } from "../../shared/types";
 import { formatPriceUsd } from "../lib/api";
 
 /** A single product card in the `/shop` grid. */
-export function ShirtCard({ shirt }: { shirt: Shirt }) {
+export function ShirtCard({ shirt }: { shirt: ShirtSummary }) {
   return (
     <Link
       to={`/product/${shirt.slug}`}
@@ -19,7 +19,25 @@ export function ShirtCard({ shirt }: { shirt: Shirt }) {
       <h3 className="mt-2 font-display text-2xl text-emerald-800">
         {shirt.name}
       </h3>
-      <p className="font-sans text-base text-stone-700">
+      {shirt.colors.length > 0 && (
+        <ul
+          className="mt-1.5 flex flex-wrap items-center gap-1.5"
+          aria-label={`Available in ${shirt.colors.length} color${
+            shirt.colors.length === 1 ? "" : "s"
+          }`}
+        >
+          {shirt.colors.map((color) => (
+            <li
+              key={color.name}
+              title={color.name}
+              aria-hidden="true"
+              className="h-4 w-4 rounded-full border border-stone-300 shadow-sm"
+              style={{ backgroundColor: color.hex }}
+            />
+          ))}
+        </ul>
+      )}
+      <p className="mt-1 font-sans text-base text-stone-700">
         {formatPriceUsd(shirt.base_price_cents)}
       </p>
     </Link>

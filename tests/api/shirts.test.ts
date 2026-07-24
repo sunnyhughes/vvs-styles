@@ -1,6 +1,11 @@
 import { applyD1Migrations, env, SELF } from "cloudflare:test";
 import { beforeAll, describe, expect, it } from "vitest";
-import type { Color, Shirt, ShirtDetail } from "../../src/shared/types";
+import type {
+  Color,
+  Shirt,
+  ShirtDetail,
+  ShirtSummary,
+} from "../../src/shared/types";
 
 beforeAll(async () => {
   await applyD1Migrations(env.DB, env.TEST_MIGRATIONS);
@@ -81,6 +86,15 @@ describe("GET /api/shirts", () => {
     const res = await SELF.fetch("https://example.com/api/shirts");
     const body = (await res.json()) as Shirt[];
     expect(body.find((s) => s.slug === "draft-tee")).toBeUndefined();
+  });
+
+  it("includes color swatches for each shirt", async () => {
+    const res = await SELF.fetch("https://example.com/api/shirts");
+    const body = (await res.json()) as ShirtSummary[];
+    const tee = body.find((s) => s.slug === "test-tee");
+    expect(tee?.colors).toEqual([
+      expect.objectContaining({ name: "White", hex: "#FFFFFF" }),
+    ]);
   });
 });
 

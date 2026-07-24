@@ -10,6 +10,17 @@ export interface Shirt {
   hero_phrase: string;
 }
 
+/** A minimal color swatch (name + hex) for the catalog cards — no image. */
+export type ColorSwatch = Pick<Color, "name" | "hex">;
+
+/**
+ * A catalog list item: a shirt plus the swatches it's offered in, returned by
+ * `GET /api/shirts` so the `/shop` grid can hint at available colors.
+ */
+export interface ShirtSummary extends Shirt {
+  colors: ColorSwatch[];
+}
+
 /** A shirt color option (swatch). */
 export interface Color {
   id: number;

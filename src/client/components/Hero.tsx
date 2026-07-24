@@ -14,9 +14,9 @@ export function Hero() {
             Wear the words only we would say.
           </h1>
           <p className="mt-4 font-sans text-lg text-stone-700">
-            Milestone tees in your program&rsquo;s language. Pick your colors,
-            add your cleantime, and wear your pride out loud — shirts from
-            $24.99.
+            Milestone tees in your recovery journey&rsquo;s language. Pick your
+            colors, add your clean time where it applies, and wear your pride out
+            loud — starting at $24.99 for a limited time.
           </p>
           <Link
             to="/shop"
