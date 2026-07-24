@@ -16,9 +16,9 @@ export function ShirtCard({ shirt }: { shirt: ShirtSummary }) {
           className="aspect-square w-full object-cover"
         />
       </div>
-      <h3 className="mt-2 font-display text-2xl text-emerald-800">
+      <h2 className="mt-2 font-display text-2xl text-emerald-800">
         {shirt.name}
-      </h3>
+      </h2>
       {shirt.colors.length > 0 && (
         <ul
           className="mt-1.5 flex flex-wrap items-center gap-1.5"
