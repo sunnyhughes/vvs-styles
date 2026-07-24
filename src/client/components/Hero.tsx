@@ -28,7 +28,7 @@ export function Hero() {
 
         <div className="overflow-hidden rounded-md border border-stone-200 bg-stone-100 shadow-sm">
           <img
-            src="/shirts/still-here-still-clean-red-lifestyle.png"
+            src="/shirts/still-here-still-clean-red-lifestyle.webp"
             alt="A smiling woman wearing the red Still Here, Still Clean recovery tee"
             className="aspect-[4/5] w-full object-cover object-top"
             loading="eager"
